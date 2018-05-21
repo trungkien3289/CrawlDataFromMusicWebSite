@@ -1,0 +1,79 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="CrawlDatabaseModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityContainer Name="CrawlDatabaseEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Albums" EntityType="CrawlDatabaseModel.Album" />
+    <EntitySet Name="Artists" EntityType="CrawlDatabaseModel.Artist" />
+    <AssociationSet Name="FK_Album_Artist" Association="CrawlDatabaseModel.FK_Album_Artist">
+      <End Role="Artist" EntitySet="Artists" />
+      <End Role="Album" EntitySet="Albums" />
+    </AssociationSet>
+    <EntitySet Name="Songs" EntityType="CrawlDatabaseModel.Song" />
+    <AssociationSet Name="map_album_song" Association="CrawlDatabaseModel.map_album_song">
+      <End Role="Album" EntitySet="Albums" />
+      <End Role="Song" EntitySet="Songs" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Album">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Title" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+    <Property Name="ArtistName" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+    <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Thumbnail" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="ReleaseDate" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="Slug" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="ArtistGuid" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="ArtistId" Type="Int32" />
+    <NavigationProperty Name="Artist" Relationship="CrawlDatabaseModel.FK_Album_Artist" FromRole="Album" ToRole="Artist" />
+    <NavigationProperty Name="Songs" Relationship="CrawlDatabaseModel.map_album_song" FromRole="Album" ToRole="Song" />
+  </EntityType>
+  <EntityType Name="Artist">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Guid" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="Name" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+    <Property Name="Slug" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+    <Property Name="Thumbnail" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <NavigationProperty Name="Albums" Relationship="CrawlDatabaseModel.FK_Album_Artist" FromRole="Artist" ToRole="Album" />
+  </EntityType>
+  <Association Name="FK_Album_Artist">
+    <End Type="CrawlDatabaseModel.Artist" Role="Artist" Multiplicity="0..1" />
+    <End Type="CrawlDatabaseModel.Album" Role="Album" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Artist">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Album">
+        <PropertyRef Name="ArtistId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="Song">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Guid" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="AlbumGuid" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="AlbumSlug" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="ArtistGuid" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="ArtistSlug" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Title" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+    <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Thumbnail" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+    <Property Name="MediaUrl" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Lyrics" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Status" Type="Int32" />
+    <Property Name="Url" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Duration" Type="Double" />
+    <NavigationProperty Name="Albums" Relationship="CrawlDatabaseModel.map_album_song" FromRole="Song" ToRole="Album" />
+  </EntityType>
+  <Association Name="map_album_song">
+    <End Type="CrawlDatabaseModel.Album" Role="Album" Multiplicity="*" />
+    <End Type="CrawlDatabaseModel.Song" Role="Song" Multiplicity="*" />
+  </Association>
+</Schema>

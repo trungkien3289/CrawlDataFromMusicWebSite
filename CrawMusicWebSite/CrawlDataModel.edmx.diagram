@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="ebb48f295313478a893d3b697c2f3ea4" Name="Diagram1">
+        <EntityTypeShape EntityType="CrawlDatabaseModel.Album" Width="1.5" PointX="4.875" PointY="1.75" />
+        <EntityTypeShape EntityType="CrawlDatabaseModel.Artist" Width="1.5" PointX="0.75" PointY="1.75" />
+        <AssociationConnector Association="CrawlDatabaseModel.FK_Album_Artist" />
+        <EntityTypeShape EntityType="CrawlDatabaseModel.Song" Width="1.5" PointX="9" PointY="0.875" />
+        <AssociationConnector Association="CrawlDatabaseModel.map_album_song" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

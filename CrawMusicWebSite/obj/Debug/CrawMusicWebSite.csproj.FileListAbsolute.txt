@@ -1,0 +1,91 @@
+D:\Exercise Project\CrawMusicWebsite\CrawMusicWebSite\CrawMusicWebSite\bin\Debug\CrawMusicWebSite.exe.config
+D:\Exercise Project\CrawMusicWebsite\CrawMusicWebSite\CrawMusicWebSite\bin\Debug\CrawMusicWebSite.exe
+D:\Exercise Project\CrawMusicWebsite\CrawMusicWebSite\CrawMusicWebSite\bin\Debug\CrawMusicWebSite.pdb
+D:\Exercise Project\CrawMusicWebsite\CrawMusicWebSite\CrawMusicWebSite\bin\Debug\FSharp.Core.dll
+D:\Exercise Project\CrawMusicWebsite\CrawMusicWebSite\CrawMusicWebSite\bin\Debug\HtmlAgilityPack.dll
+D:\Exercise Project\CrawMusicWebsite\CrawMusicWebSite\CrawMusicWebSite\bin\Debug\Jurassic.dll
+D:\Exercise Project\CrawMusicWebsite\CrawMusicWebSite\CrawMusicWebSite\bin\Debug\ScrapySharp.Core.dll
+D:\Exercise Project\CrawMusicWebsite\CrawMusicWebSite\CrawMusicWebSite\bin\Debug\ScrapySharpAsync.dll
+D:\Exercise Project\CrawMusicWebsite\CrawMusicWebSite\CrawMusicWebSite\bin\Debug\FSharp.Core.xml
+D:\Exercise Project\CrawMusicWebsite\CrawMusicWebSite\CrawMusicWebSite\bin\Debug\HtmlAgilityPack.pdb
+D:\Exercise Project\CrawMusicWebsite\CrawMusicWebSite\CrawMusicWebSite\bin\Debug\HtmlAgilityPack.xml
+D:\Exercise Project\CrawMusicWebsite\CrawMusicWebSite\CrawMusicWebSite\bin\Debug\Jurassic.pdb
+D:\Exercise Project\CrawMusicWebsite\CrawMusicWebSite\CrawMusicWebSite\obj\Debug\CrawMusicWebSite.csprojResolveAssemblyReference.cache
+D:\Exercise Project\CrawMusicWebsite\CrawMusicWebSite\CrawMusicWebSite\obj\Debug\CrawMusicWebSite.csproj.CoreCompileInputs.cache
+D:\Exercise Project\CrawMusicWebsite\CrawMusicWebSite\CrawMusicWebSite\obj\Debug\CrawMusicWebSite.csproj.CopyComplete
+D:\Exercise Project\CrawMusicWebsite\CrawMusicWebSite\CrawMusicWebSite\obj\Debug\CrawMusicWebSite.exe
+D:\Exercise Project\CrawMusicWebsite\CrawMusicWebSite\CrawMusicWebSite\obj\Debug\CrawMusicWebSite.pdb
+D:\Exercise Project\CrawMusicWebsite\CrawMusicWebSite\CrawMusicWebSite\bin\Debug\Newtonsoft.Json.dll
+D:\Exercise Project\CrawMusicWebsite\CrawMusicWebSite\CrawMusicWebSite\bin\Debug\Newtonsoft.Json.xml
+D:\Exercise Project\CrawMusicWebsite\CrawlMusicStore\CrawMusicWebSite\CrawMusicWebSite\bin\Debug\CrawMusicWebSite.exe.config
+D:\Exercise Project\CrawMusicWebsite\CrawlMusicStore\CrawMusicWebSite\CrawMusicWebSite\bin\Debug\CrawMusicWebSite.exe
+D:\Exercise Project\CrawMusicWebsite\CrawlMusicStore\CrawMusicWebSite\CrawMusicWebSite\bin\Debug\CrawMusicWebSite.pdb
+D:\Exercise Project\CrawMusicWebsite\CrawlMusicStore\CrawMusicWebSite\CrawMusicWebSite\bin\Debug\FSharp.Core.dll
+D:\Exercise Project\CrawMusicWebsite\CrawlMusicStore\CrawMusicWebSite\CrawMusicWebSite\bin\Debug\HtmlAgilityPack.dll
+D:\Exercise Project\CrawMusicWebsite\CrawlMusicStore\CrawMusicWebSite\CrawMusicWebSite\bin\Debug\Jurassic.dll
+D:\Exercise Project\CrawMusicWebsite\CrawlMusicStore\CrawMusicWebSite\CrawMusicWebSite\bin\Debug\Newtonsoft.Json.dll
+D:\Exercise Project\CrawMusicWebsite\CrawlMusicStore\CrawMusicWebSite\CrawMusicWebSite\bin\Debug\ScrapySharp.Core.dll
+D:\Exercise Project\CrawMusicWebsite\CrawlMusicStore\CrawMusicWebSite\CrawMusicWebSite\bin\Debug\ScrapySharpAsync.dll
+D:\Exercise Project\CrawMusicWebsite\CrawlMusicStore\CrawMusicWebSite\CrawMusicWebSite\bin\Debug\FSharp.Core.xml
+D:\Exercise Project\CrawMusicWebsite\CrawlMusicStore\CrawMusicWebSite\CrawMusicWebSite\bin\Debug\HtmlAgilityPack.pdb
+D:\Exercise Project\CrawMusicWebsite\CrawlMusicStore\CrawMusicWebSite\CrawMusicWebSite\bin\Debug\HtmlAgilityPack.xml
+D:\Exercise Project\CrawMusicWebsite\CrawlMusicStore\CrawMusicWebSite\CrawMusicWebSite\bin\Debug\Jurassic.pdb
+D:\Exercise Project\CrawMusicWebsite\CrawlMusicStore\CrawMusicWebSite\CrawMusicWebSite\bin\Debug\Newtonsoft.Json.xml
+D:\Exercise Project\CrawMusicWebsite\CrawlMusicStore\CrawMusicWebSite\CrawMusicWebSite\obj\Debug\CrawMusicWebSite.csprojResolveAssemblyReference.cache
+D:\Exercise Project\CrawMusicWebsite\CrawlMusicStore\CrawMusicWebSite\CrawMusicWebSite\obj\Debug\CrawMusicWebSite.csproj.CoreCompileInputs.cache
+D:\Exercise Project\CrawMusicWebsite\CrawlMusicStore\CrawMusicWebSite\CrawMusicWebSite\obj\Debug\CrawMusicWebSite.csproj.CopyComplete
+D:\Exercise Project\CrawMusicWebsite\CrawlMusicStore\CrawMusicWebSite\CrawMusicWebSite\obj\Debug\CrawMusicWebSite.exe
+D:\Exercise Project\CrawMusicWebsite\CrawlMusicStore\CrawMusicWebSite\CrawMusicWebSite\obj\Debug\CrawMusicWebSite.pdb
+D:\Exercise Project\CrawMusicWebsite\CrawlMusicStore\CrawMusicWebSite\CrawMusicWebSite\bin\Debug\EntityFramework.dll
+D:\Exercise Project\CrawMusicWebsite\CrawlMusicStore\CrawMusicWebSite\CrawMusicWebSite\bin\Debug\EntityFramework.SqlServer.dll
+D:\Exercise Project\CrawMusicWebsite\CrawlMusicStore\CrawMusicWebSite\CrawMusicWebSite\bin\Debug\EntityFramework.xml
+D:\Exercise Project\CrawMusicWebsite\CrawlMusicStore\CrawMusicWebSite\CrawMusicWebSite\bin\Debug\EntityFramework.SqlServer.xml
+E:\Personal resources\CrawMusicWebSite\CrawMusicWebSite\CrawMusicWebSite\bin\Debug\CrawMusicWebSite.exe.config
+E:\Personal resources\CrawMusicWebSite\CrawMusicWebSite\CrawMusicWebSite\bin\Debug\CrawMusicWebSite.exe
+E:\Personal resources\CrawMusicWebSite\CrawMusicWebSite\CrawMusicWebSite\bin\Debug\CrawMusicWebSite.pdb
+E:\Personal resources\CrawMusicWebSite\CrawMusicWebSite\CrawMusicWebSite\bin\Debug\EntityFramework.dll
+E:\Personal resources\CrawMusicWebSite\CrawMusicWebSite\CrawMusicWebSite\bin\Debug\EntityFramework.SqlServer.dll
+E:\Personal resources\CrawMusicWebSite\CrawMusicWebSite\CrawMusicWebSite\bin\Debug\FSharp.Core.dll
+E:\Personal resources\CrawMusicWebSite\CrawMusicWebSite\CrawMusicWebSite\bin\Debug\HtmlAgilityPack.dll
+E:\Personal resources\CrawMusicWebSite\CrawMusicWebSite\CrawMusicWebSite\bin\Debug\Jurassic.dll
+E:\Personal resources\CrawMusicWebSite\CrawMusicWebSite\CrawMusicWebSite\bin\Debug\Newtonsoft.Json.dll
+E:\Personal resources\CrawMusicWebSite\CrawMusicWebSite\CrawMusicWebSite\bin\Debug\ScrapySharp.Core.dll
+E:\Personal resources\CrawMusicWebSite\CrawMusicWebSite\CrawMusicWebSite\bin\Debug\ScrapySharpAsync.dll
+E:\Personal resources\CrawMusicWebSite\CrawMusicWebSite\CrawMusicWebSite\bin\Debug\EntityFramework.xml
+E:\Personal resources\CrawMusicWebSite\CrawMusicWebSite\CrawMusicWebSite\bin\Debug\EntityFramework.SqlServer.xml
+E:\Personal resources\CrawMusicWebSite\CrawMusicWebSite\CrawMusicWebSite\bin\Debug\FSharp.Core.xml
+E:\Personal resources\CrawMusicWebSite\CrawMusicWebSite\CrawMusicWebSite\bin\Debug\HtmlAgilityPack.pdb
+E:\Personal resources\CrawMusicWebSite\CrawMusicWebSite\CrawMusicWebSite\bin\Debug\HtmlAgilityPack.xml
+E:\Personal resources\CrawMusicWebSite\CrawMusicWebSite\CrawMusicWebSite\bin\Debug\Jurassic.pdb
+E:\Personal resources\CrawMusicWebSite\CrawMusicWebSite\CrawMusicWebSite\bin\Debug\Newtonsoft.Json.xml
+E:\Personal resources\CrawMusicWebSite\CrawMusicWebSite\CrawMusicWebSite\obj\Debug\CrawMusicWebSite.csprojResolveAssemblyReference.cache
+E:\Personal resources\CrawMusicWebSite\CrawMusicWebSite\CrawMusicWebSite\obj\Debug\CrawMusicWebSite.csproj.CoreCompileInputs.cache
+E:\Personal resources\CrawMusicWebSite\CrawMusicWebSite\CrawMusicWebSite\obj\Debug\CrawMusicWebSite.exe
+E:\Personal resources\CrawMusicWebSite\CrawMusicWebSite\CrawMusicWebSite\obj\Debug\CrawMusicWebSite.pdb
+E:\Personal resources\CrawMusicWebSite\CrawMusicWebSite\CrawMusicWebSite\bin\Debug\NAudio.dll
+E:\Personal resources\CrawMusicWebSite\CrawMusicWebSite\CrawMusicWebSite\bin\Debug\NAudio.xml
+D:\Exercise Project\CrawMusicWebSite final\CrawMusicWebSite\CrawMusicWebSite\bin\Debug\CrawMusicWebSite.exe.config
+D:\Exercise Project\CrawMusicWebSite final\CrawMusicWebSite\CrawMusicWebSite\bin\Debug\CrawMusicWebSite.exe
+D:\Exercise Project\CrawMusicWebSite final\CrawMusicWebSite\CrawMusicWebSite\bin\Debug\CrawMusicWebSite.pdb
+D:\Exercise Project\CrawMusicWebSite final\CrawMusicWebSite\CrawMusicWebSite\bin\Debug\EntityFramework.dll
+D:\Exercise Project\CrawMusicWebSite final\CrawMusicWebSite\CrawMusicWebSite\bin\Debug\EntityFramework.SqlServer.dll
+D:\Exercise Project\CrawMusicWebSite final\CrawMusicWebSite\CrawMusicWebSite\bin\Debug\FSharp.Core.dll
+D:\Exercise Project\CrawMusicWebSite final\CrawMusicWebSite\CrawMusicWebSite\bin\Debug\HtmlAgilityPack.dll
+D:\Exercise Project\CrawMusicWebSite final\CrawMusicWebSite\CrawMusicWebSite\bin\Debug\Jurassic.dll
+D:\Exercise Project\CrawMusicWebSite final\CrawMusicWebSite\CrawMusicWebSite\bin\Debug\NAudio.dll
+D:\Exercise Project\CrawMusicWebSite final\CrawMusicWebSite\CrawMusicWebSite\bin\Debug\Newtonsoft.Json.dll
+D:\Exercise Project\CrawMusicWebSite final\CrawMusicWebSite\CrawMusicWebSite\bin\Debug\ScrapySharp.Core.dll
+D:\Exercise Project\CrawMusicWebSite final\CrawMusicWebSite\CrawMusicWebSite\bin\Debug\ScrapySharpAsync.dll
+D:\Exercise Project\CrawMusicWebSite final\CrawMusicWebSite\CrawMusicWebSite\bin\Debug\EntityFramework.xml
+D:\Exercise Project\CrawMusicWebSite final\CrawMusicWebSite\CrawMusicWebSite\bin\Debug\EntityFramework.SqlServer.xml
+D:\Exercise Project\CrawMusicWebSite final\CrawMusicWebSite\CrawMusicWebSite\bin\Debug\FSharp.Core.xml
+D:\Exercise Project\CrawMusicWebSite final\CrawMusicWebSite\CrawMusicWebSite\bin\Debug\HtmlAgilityPack.pdb
+D:\Exercise Project\CrawMusicWebSite final\CrawMusicWebSite\CrawMusicWebSite\bin\Debug\HtmlAgilityPack.xml
+D:\Exercise Project\CrawMusicWebSite final\CrawMusicWebSite\CrawMusicWebSite\bin\Debug\Jurassic.pdb
+D:\Exercise Project\CrawMusicWebSite final\CrawMusicWebSite\CrawMusicWebSite\bin\Debug\NAudio.xml
+D:\Exercise Project\CrawMusicWebSite final\CrawMusicWebSite\CrawMusicWebSite\bin\Debug\Newtonsoft.Json.xml
+D:\Exercise Project\CrawMusicWebSite final\CrawMusicWebSite\CrawMusicWebSite\obj\Debug\CrawMusicWebSite.csprojResolveAssemblyReference.cache
+D:\Exercise Project\CrawMusicWebSite final\CrawMusicWebSite\CrawMusicWebSite\obj\Debug\CrawMusicWebSite.csproj.CoreCompileInputs.cache
+D:\Exercise Project\CrawMusicWebSite final\CrawMusicWebSite\CrawMusicWebSite\obj\Debug\CrawMusicWebSite.csproj.CopyComplete
+D:\Exercise Project\CrawMusicWebSite final\CrawMusicWebSite\CrawMusicWebSite\obj\Debug\CrawMusicWebSite.exe
+D:\Exercise Project\CrawMusicWebSite final\CrawMusicWebSite\CrawMusicWebSite\obj\Debug\CrawMusicWebSite.pdb

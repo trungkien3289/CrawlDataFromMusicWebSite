@@ -1,0 +1,276 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="CrawlDatabaseModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Album">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Title" Type="nvarchar" MaxLength="300" />
+          <Property Name="ArtistName" Type="nvarchar" MaxLength="300" />
+          <Property Name="Description" Type="nvarchar(max)" />
+          <Property Name="Thumbnail" Type="nvarchar" MaxLength="200" />
+          <Property Name="ReleaseDate" Type="nvarchar" MaxLength="100" />
+          <Property Name="Slug" Type="nvarchar" MaxLength="200" />
+          <Property Name="ArtistGuid" Type="nvarchar" MaxLength="100" />
+          <Property Name="ArtistId" Type="int" />
+        </EntityType>
+        <EntityType Name="Artist">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Guid" Type="nvarchar" MaxLength="100" />
+          <Property Name="Name" Type="nvarchar" MaxLength="300" />
+          <Property Name="Slug" Type="nvarchar" MaxLength="300" />
+          <Property Name="Thumbnail" Type="nvarchar" MaxLength="300" />
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+        </EntityType>
+        <EntityType Name="map_album_song">
+          <Key>
+            <PropertyRef Name="AlbumId" />
+            <PropertyRef Name="SongId" />
+          </Key>
+          <Property Name="AlbumId" Type="int" Nullable="false" />
+          <Property Name="SongId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Song">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Guid" Type="nvarchar" MaxLength="100" />
+          <Property Name="AlbumGuid" Type="nvarchar" MaxLength="100" />
+          <Property Name="AlbumSlug" Type="nvarchar" MaxLength="200" />
+          <Property Name="ArtistGuid" Type="nvarchar" MaxLength="100" />
+          <Property Name="ArtistSlug" Type="nvarchar(max)" />
+          <Property Name="Title" Type="nvarchar" MaxLength="300" />
+          <Property Name="Description" Type="nvarchar(max)" />
+          <Property Name="Thumbnail" Type="nvarchar" MaxLength="300" />
+          <Property Name="MediaUrl" Type="nvarchar(max)" />
+          <Property Name="Lyrics" Type="nvarchar(max)" />
+          <Property Name="Status" Type="int" />
+          <Property Name="Url" Type="nvarchar(max)" />
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Duration" Type="float" />
+        </EntityType>
+        <Association Name="FK_Album_Artist">
+          <End Role="Artist" Type="Self.Artist" Multiplicity="0..1" />
+          <End Role="Album" Type="Self.Album" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Artist">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Album">
+              <PropertyRef Name="ArtistId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_map_album_song_Album">
+          <End Role="Album" Type="Self.Album" Multiplicity="1" />
+          <End Role="map_album_song" Type="Self.map_album_song" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Album">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="map_album_song">
+              <PropertyRef Name="AlbumId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_map_album_song_Song">
+          <End Role="Song" Type="Self.Song" Multiplicity="1" />
+          <End Role="map_album_song" Type="Self.map_album_song" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Song">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="map_album_song">
+              <PropertyRef Name="SongId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="CrawlDatabaseModelStoreContainer">
+          <EntitySet Name="Album" EntityType="Self.Album" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Artist" EntityType="Self.Artist" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="map_album_song" EntityType="Self.map_album_song" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Song" EntityType="Self.Song" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Album_Artist" Association="Self.FK_Album_Artist">
+            <End Role="Artist" EntitySet="Artist" />
+            <End Role="Album" EntitySet="Album" />
+          </AssociationSet>
+          <AssociationSet Name="FK_map_album_song_Album" Association="Self.FK_map_album_song_Album">
+            <End Role="Album" EntitySet="Album" />
+            <End Role="map_album_song" EntitySet="map_album_song" />
+          </AssociationSet>
+          <AssociationSet Name="FK_map_album_song_Song" Association="Self.FK_map_album_song_Song">
+            <End Role="Song" EntitySet="Song" />
+            <End Role="map_album_song" EntitySet="map_album_song" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="CrawlDatabaseModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="CrawlDatabaseEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Albums" EntityType="CrawlDatabaseModel.Album" />
+          <EntitySet Name="Artists" EntityType="CrawlDatabaseModel.Artist" />
+          <AssociationSet Name="FK_Album_Artist" Association="CrawlDatabaseModel.FK_Album_Artist">
+            <End Role="Artist" EntitySet="Artists" />
+            <End Role="Album" EntitySet="Albums" />
+          </AssociationSet>
+          <EntitySet Name="Songs" EntityType="CrawlDatabaseModel.Song" />
+          <AssociationSet Name="map_album_song" Association="CrawlDatabaseModel.map_album_song">
+            <End Role="Album" EntitySet="Albums" />
+            <End Role="Song" EntitySet="Songs" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Album">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Title" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+          <Property Name="ArtistName" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Thumbnail" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="ReleaseDate" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Slug" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="ArtistGuid" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="ArtistId" Type="Int32" />
+          <NavigationProperty Name="Artist" Relationship="CrawlDatabaseModel.FK_Album_Artist" FromRole="Album" ToRole="Artist" />
+          <NavigationProperty Name="Songs" Relationship="CrawlDatabaseModel.map_album_song" FromRole="Album" ToRole="Song" />
+        </EntityType>
+        <EntityType Name="Artist">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Guid" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Name" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+          <Property Name="Slug" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+          <Property Name="Thumbnail" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="Albums" Relationship="CrawlDatabaseModel.FK_Album_Artist" FromRole="Artist" ToRole="Album" />
+        </EntityType>
+        <Association Name="FK_Album_Artist">
+          <End Type="CrawlDatabaseModel.Artist" Role="Artist" Multiplicity="0..1" />
+          <End Type="CrawlDatabaseModel.Album" Role="Album" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Artist">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Album">
+              <PropertyRef Name="ArtistId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Song">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Guid" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="AlbumGuid" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="AlbumSlug" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="ArtistGuid" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="ArtistSlug" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Title" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Thumbnail" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+          <Property Name="MediaUrl" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Lyrics" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Status" Type="Int32" />
+          <Property Name="Url" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Duration" Type="Double" />
+          <NavigationProperty Name="Albums" Relationship="CrawlDatabaseModel.map_album_song" FromRole="Song" ToRole="Album" />
+        </EntityType>
+        <Association Name="map_album_song">
+          <End Type="CrawlDatabaseModel.Album" Role="Album" Multiplicity="*" />
+          <End Type="CrawlDatabaseModel.Song" Role="Song" Multiplicity="*" />
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="CrawlDatabaseModelStoreContainer" CdmEntityContainer="CrawlDatabaseEntities">
+          <EntitySetMapping Name="Albums">
+            <EntityTypeMapping TypeName="CrawlDatabaseModel.Album">
+              <MappingFragment StoreEntitySet="Album">
+                <ScalarProperty Name="ArtistId" ColumnName="ArtistId" />
+                <ScalarProperty Name="ArtistGuid" ColumnName="ArtistGuid" />
+                <ScalarProperty Name="Slug" ColumnName="Slug" />
+                <ScalarProperty Name="ReleaseDate" ColumnName="ReleaseDate" />
+                <ScalarProperty Name="Thumbnail" ColumnName="Thumbnail" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="ArtistName" ColumnName="ArtistName" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Artists">
+            <EntityTypeMapping TypeName="CrawlDatabaseModel.Artist">
+              <MappingFragment StoreEntitySet="Artist">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Thumbnail" ColumnName="Thumbnail" />
+                <ScalarProperty Name="Slug" ColumnName="Slug" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Guid" ColumnName="Guid" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Songs">
+            <EntityTypeMapping TypeName="CrawlDatabaseModel.Song">
+              <MappingFragment StoreEntitySet="Song">
+                <ScalarProperty Name="Duration" ColumnName="Duration" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Url" ColumnName="Url" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="Lyrics" ColumnName="Lyrics" />
+                <ScalarProperty Name="MediaUrl" ColumnName="MediaUrl" />
+                <ScalarProperty Name="Thumbnail" ColumnName="Thumbnail" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="ArtistSlug" ColumnName="ArtistSlug" />
+                <ScalarProperty Name="ArtistGuid" ColumnName="ArtistGuid" />
+                <ScalarProperty Name="AlbumSlug" ColumnName="AlbumSlug" />
+                <ScalarProperty Name="AlbumGuid" ColumnName="AlbumGuid" />
+                <ScalarProperty Name="Guid" ColumnName="Guid" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="map_album_song" TypeName="CrawlDatabaseModel.map_album_song" StoreEntitySet="map_album_song">
+            <EndProperty Name="Song">
+              <ScalarProperty Name="Id" ColumnName="SongId" />
+            </EndProperty>
+            <EndProperty Name="Album">
+              <ScalarProperty Name="Id" ColumnName="AlbumId" />
+            </EndProperty>
+          </AssociationSetMapping>
+          </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

@@ -1,0 +1,645 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="MusicStoreModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="ms_Album">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Title" Type="nvarchar(max)" />
+          <Property Name="Description" Type="nvarchar(max)" />
+          <Property Name="Thumbnail" Type="nvarchar(max)" />
+          <Property Name="ReleaseDate" Type="datetime" />
+          <Property Name="Status" Type="int" />
+          <Property Name="Url" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="ms_Album_Genre">
+          <Key>
+            <PropertyRef Name="AlbumId" />
+            <PropertyRef Name="GenreId" />
+          </Key>
+          <Property Name="AlbumId" Type="int" Nullable="false" />
+          <Property Name="GenreId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ms_Artist">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar(max)" />
+          <Property Name="Status" Type="int" />
+          <Property Name="Url" Type="nvarchar(max)" />
+          <Property Name="Thumbnail" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="ms_Artist_Album">
+          <Key>
+            <PropertyRef Name="ArtistId" />
+            <PropertyRef Name="AlbumId" />
+          </Key>
+          <Property Name="ArtistId" Type="int" Nullable="false" />
+          <Property Name="AlbumId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ms_Collection">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Title" Type="nvarchar(max)" />
+          <Property Name="Description" Type="nvarchar(max)" />
+          <Property Name="Thumbnail" Type="nvarchar(max)" />
+          <Property Name="Status" Type="int" />
+          <Property Name="Url" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="ms_Genre">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar(max)" />
+          <Property Name="Description" Type="nvarchar(max)" />
+          <Property Name="Status" Type="int" />
+          <Property Name="Url" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="ms_Song">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="AlbumId" Type="int" Nullable="false" />
+          <Property Name="Title" Type="nvarchar(max)" />
+          <Property Name="Description" Type="nvarchar(max)" />
+          <Property Name="Thumbnail" Type="nvarchar(max)" />
+          <Property Name="MediaUrl" Type="nvarchar(max)" />
+          <Property Name="Lyrics" Type="nvarchar(max)" />
+          <Property Name="Status" Type="int" />
+          <Property Name="Url" Type="nvarchar(max)" />
+          <Property Name="Duration" Type="float" />
+        </EntityType>
+        <EntityType Name="ms_Song_Album">
+          <Key>
+            <PropertyRef Name="SongId" />
+            <PropertyRef Name="AlbumId" />
+          </Key>
+          <Property Name="SongId" Type="int" Nullable="false" />
+          <Property Name="AlbumId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ms_Song_Artist">
+          <Key>
+            <PropertyRef Name="SongId" />
+            <PropertyRef Name="ArtistId" />
+          </Key>
+          <Property Name="SongId" Type="int" Nullable="false" />
+          <Property Name="ArtistId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ms_Song_Collection">
+          <Key>
+            <PropertyRef Name="SongId" />
+            <PropertyRef Name="CollectionId" />
+          </Key>
+          <Property Name="SongId" Type="int" Nullable="false" />
+          <Property Name="CollectionId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ms_Song_Genre">
+          <Key>
+            <PropertyRef Name="SongId" />
+            <PropertyRef Name="GenreId" />
+          </Key>
+          <Property Name="SongId" Type="int" Nullable="false" />
+          <Property Name="GenreId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="system_RouteData">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Url" Type="nvarchar(max)" />
+          <Property Name="Controller" Type="nvarchar(max)" />
+          <Property Name="Action" Type="nvarchar(max)" />
+          <Property Name="UrlId" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_dbo_ms_Album_Genre_dbo_ms_Album_AlbumId">
+          <End Role="ms_Album" Type="Self.ms_Album" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="ms_Album_Genre" Type="Self.ms_Album_Genre" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ms_Album">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ms_Album_Genre">
+              <PropertyRef Name="AlbumId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_ms_Album_Genre_dbo_ms_Genre_GenreId">
+          <End Role="ms_Genre" Type="Self.ms_Genre" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="ms_Album_Genre" Type="Self.ms_Album_Genre" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ms_Genre">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ms_Album_Genre">
+              <PropertyRef Name="GenreId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_ms_Artist_Album_dbo_ms_Album_AlbumId">
+          <End Role="ms_Album" Type="Self.ms_Album" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="ms_Artist_Album" Type="Self.ms_Artist_Album" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ms_Album">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ms_Artist_Album">
+              <PropertyRef Name="AlbumId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_ms_Artist_Album_dbo_ms_Artist_ArtistId">
+          <End Role="ms_Artist" Type="Self.ms_Artist" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="ms_Artist_Album" Type="Self.ms_Artist_Album" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ms_Artist">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ms_Artist_Album">
+              <PropertyRef Name="ArtistId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_ms_Song_Album_dbo_ms_Album_AlbumId">
+          <End Role="ms_Album" Type="Self.ms_Album" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="ms_Song_Album" Type="Self.ms_Song_Album" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ms_Album">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ms_Song_Album">
+              <PropertyRef Name="AlbumId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_ms_Song_Album_dbo_ms_Song_SongId">
+          <End Role="ms_Song" Type="Self.ms_Song" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="ms_Song_Album" Type="Self.ms_Song_Album" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ms_Song">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ms_Song_Album">
+              <PropertyRef Name="SongId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_ms_Song_Artist_dbo_ms_Artist_ArtistId">
+          <End Role="ms_Artist" Type="Self.ms_Artist" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="ms_Song_Artist" Type="Self.ms_Song_Artist" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ms_Artist">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ms_Song_Artist">
+              <PropertyRef Name="ArtistId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_ms_Song_Artist_dbo_ms_Song_SongId">
+          <End Role="ms_Song" Type="Self.ms_Song" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="ms_Song_Artist" Type="Self.ms_Song_Artist" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ms_Song">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ms_Song_Artist">
+              <PropertyRef Name="SongId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_ms_Song_Collection_dbo_ms_Collection_CollectionId">
+          <End Role="ms_Collection" Type="Self.ms_Collection" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="ms_Song_Collection" Type="Self.ms_Song_Collection" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ms_Collection">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ms_Song_Collection">
+              <PropertyRef Name="CollectionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_ms_Song_Collection_dbo_ms_Song_SongId">
+          <End Role="ms_Song" Type="Self.ms_Song" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="ms_Song_Collection" Type="Self.ms_Song_Collection" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ms_Song">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ms_Song_Collection">
+              <PropertyRef Name="SongId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_ms_Song_Genre_dbo_ms_Genre_GenreId">
+          <End Role="ms_Genre" Type="Self.ms_Genre" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="ms_Song_Genre" Type="Self.ms_Song_Genre" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ms_Genre">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ms_Song_Genre">
+              <PropertyRef Name="GenreId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_ms_Song_Genre_dbo_ms_Song_SongId">
+          <End Role="ms_Song" Type="Self.ms_Song" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="ms_Song_Genre" Type="Self.ms_Song_Genre" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ms_Song">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ms_Song_Genre">
+              <PropertyRef Name="SongId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="MusicStoreModelStoreContainer">
+          <EntitySet Name="ms_Album" EntityType="Self.ms_Album" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ms_Album_Genre" EntityType="Self.ms_Album_Genre" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ms_Artist" EntityType="Self.ms_Artist" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ms_Artist_Album" EntityType="Self.ms_Artist_Album" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ms_Collection" EntityType="Self.ms_Collection" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ms_Genre" EntityType="Self.ms_Genre" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ms_Song" EntityType="Self.ms_Song" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ms_Song_Album" EntityType="Self.ms_Song_Album" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ms_Song_Artist" EntityType="Self.ms_Song_Artist" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ms_Song_Collection" EntityType="Self.ms_Song_Collection" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ms_Song_Genre" EntityType="Self.ms_Song_Genre" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="system_RouteData" EntityType="Self.system_RouteData" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_dbo_ms_Album_Genre_dbo_ms_Album_AlbumId" Association="Self.FK_dbo_ms_Album_Genre_dbo_ms_Album_AlbumId">
+            <End Role="ms_Album" EntitySet="ms_Album" />
+            <End Role="ms_Album_Genre" EntitySet="ms_Album_Genre" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_ms_Album_Genre_dbo_ms_Genre_GenreId" Association="Self.FK_dbo_ms_Album_Genre_dbo_ms_Genre_GenreId">
+            <End Role="ms_Genre" EntitySet="ms_Genre" />
+            <End Role="ms_Album_Genre" EntitySet="ms_Album_Genre" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_ms_Artist_Album_dbo_ms_Album_AlbumId" Association="Self.FK_dbo_ms_Artist_Album_dbo_ms_Album_AlbumId">
+            <End Role="ms_Album" EntitySet="ms_Album" />
+            <End Role="ms_Artist_Album" EntitySet="ms_Artist_Album" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_ms_Artist_Album_dbo_ms_Artist_ArtistId" Association="Self.FK_dbo_ms_Artist_Album_dbo_ms_Artist_ArtistId">
+            <End Role="ms_Artist" EntitySet="ms_Artist" />
+            <End Role="ms_Artist_Album" EntitySet="ms_Artist_Album" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_ms_Song_Album_dbo_ms_Album_AlbumId" Association="Self.FK_dbo_ms_Song_Album_dbo_ms_Album_AlbumId">
+            <End Role="ms_Album" EntitySet="ms_Album" />
+            <End Role="ms_Song_Album" EntitySet="ms_Song_Album" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_ms_Song_Album_dbo_ms_Song_SongId" Association="Self.FK_dbo_ms_Song_Album_dbo_ms_Song_SongId">
+            <End Role="ms_Song" EntitySet="ms_Song" />
+            <End Role="ms_Song_Album" EntitySet="ms_Song_Album" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_ms_Song_Artist_dbo_ms_Artist_ArtistId" Association="Self.FK_dbo_ms_Song_Artist_dbo_ms_Artist_ArtistId">
+            <End Role="ms_Artist" EntitySet="ms_Artist" />
+            <End Role="ms_Song_Artist" EntitySet="ms_Song_Artist" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_ms_Song_Artist_dbo_ms_Song_SongId" Association="Self.FK_dbo_ms_Song_Artist_dbo_ms_Song_SongId">
+            <End Role="ms_Song" EntitySet="ms_Song" />
+            <End Role="ms_Song_Artist" EntitySet="ms_Song_Artist" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_ms_Song_Collection_dbo_ms_Collection_CollectionId" Association="Self.FK_dbo_ms_Song_Collection_dbo_ms_Collection_CollectionId">
+            <End Role="ms_Collection" EntitySet="ms_Collection" />
+            <End Role="ms_Song_Collection" EntitySet="ms_Song_Collection" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_ms_Song_Collection_dbo_ms_Song_SongId" Association="Self.FK_dbo_ms_Song_Collection_dbo_ms_Song_SongId">
+            <End Role="ms_Song" EntitySet="ms_Song" />
+            <End Role="ms_Song_Collection" EntitySet="ms_Song_Collection" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_ms_Song_Genre_dbo_ms_Genre_GenreId" Association="Self.FK_dbo_ms_Song_Genre_dbo_ms_Genre_GenreId">
+            <End Role="ms_Genre" EntitySet="ms_Genre" />
+            <End Role="ms_Song_Genre" EntitySet="ms_Song_Genre" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_ms_Song_Genre_dbo_ms_Song_SongId" Association="Self.FK_dbo_ms_Song_Genre_dbo_ms_Song_SongId">
+            <End Role="ms_Song" EntitySet="ms_Song" />
+            <End Role="ms_Song_Genre" EntitySet="ms_Song_Genre" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="MusicStoreModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="ms_Album">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Title" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Thumbnail" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ReleaseDate" Type="DateTime" Precision="3" />
+          <Property Name="Status" Type="Int32" />
+          <Property Name="Url" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="ms_Genre" Relationship="Self.ms_Album_Genre" FromRole="ms_Album" ToRole="ms_Genre" />
+          <NavigationProperty Name="ms_Artist" Relationship="Self.ms_Artist_Album" FromRole="ms_Album" ToRole="ms_Artist" />
+          <NavigationProperty Name="ms_Song" Relationship="Self.ms_Song_Album" FromRole="ms_Album" ToRole="ms_Song" />
+        </EntityType>
+        <EntityType Name="ms_Artist">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Status" Type="Int32" />
+          <Property Name="Url" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="ms_Album" Relationship="Self.ms_Artist_Album" FromRole="ms_Artist" ToRole="ms_Album" />
+          <NavigationProperty Name="ms_Song" Relationship="Self.ms_Song_Artist" FromRole="ms_Artist" ToRole="ms_Song" />
+          <Property Name="Thumbnail" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="ms_Collection">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Title" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Thumbnail" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Status" Type="Int32" />
+          <Property Name="Url" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="ms_Song" Relationship="Self.ms_Song_Collection" FromRole="ms_Collection" ToRole="ms_Song" />
+        </EntityType>
+        <EntityType Name="ms_Genre">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Status" Type="Int32" />
+          <NavigationProperty Name="ms_Album" Relationship="Self.ms_Album_Genre" FromRole="ms_Genre" ToRole="ms_Album" />
+          <NavigationProperty Name="ms_Song" Relationship="Self.ms_Song_Genre" FromRole="ms_Genre" ToRole="ms_Song" />
+          <Property Name="Url" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="ms_Song">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="AlbumId" Type="Int32" Nullable="false" />
+          <Property Name="Title" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Thumbnail" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="MediaUrl" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Lyrics" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Status" Type="Int32" />
+          <Property Name="Url" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="ms_Album" Relationship="Self.ms_Song_Album" FromRole="ms_Song" ToRole="ms_Album" />
+          <NavigationProperty Name="ms_Artist" Relationship="Self.ms_Song_Artist" FromRole="ms_Song" ToRole="ms_Artist" />
+          <NavigationProperty Name="ms_Collection" Relationship="Self.ms_Song_Collection" FromRole="ms_Song" ToRole="ms_Collection" />
+          <NavigationProperty Name="ms_Genre" Relationship="Self.ms_Song_Genre" FromRole="ms_Song" ToRole="ms_Genre" />
+          <Property Name="Duration" Type="Double" />
+        </EntityType>
+        <EntityType Name="system_RouteData">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Url" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Controller" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Action" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="UrlId" Type="Int32" Nullable="false" />
+        </EntityType>
+        <Association Name="ms_Album_Genre">
+          <End Role="ms_Album" Type="Self.ms_Album" Multiplicity="*" />
+          <End Role="ms_Genre" Type="Self.ms_Genre" Multiplicity="*" />
+        </Association>
+        <Association Name="ms_Artist_Album">
+          <End Role="ms_Album" Type="Self.ms_Album" Multiplicity="*" />
+          <End Role="ms_Artist" Type="Self.ms_Artist" Multiplicity="*" />
+        </Association>
+        <Association Name="ms_Song_Album">
+          <End Role="ms_Album" Type="Self.ms_Album" Multiplicity="*" />
+          <End Role="ms_Song" Type="Self.ms_Song" Multiplicity="*" />
+        </Association>
+        <Association Name="ms_Song_Artist">
+          <End Role="ms_Artist" Type="Self.ms_Artist" Multiplicity="*" />
+          <End Role="ms_Song" Type="Self.ms_Song" Multiplicity="*" />
+        </Association>
+        <Association Name="ms_Song_Collection">
+          <End Role="ms_Collection" Type="Self.ms_Collection" Multiplicity="*" />
+          <End Role="ms_Song" Type="Self.ms_Song" Multiplicity="*" />
+        </Association>
+        <Association Name="ms_Song_Genre">
+          <End Role="ms_Genre" Type="Self.ms_Genre" Multiplicity="*" />
+          <End Role="ms_Song" Type="Self.ms_Song" Multiplicity="*" />
+        </Association>
+        <EntityContainer Name="MusicStoreEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="ms_Album" EntityType="Self.ms_Album" />
+          <EntitySet Name="ms_Artist" EntityType="Self.ms_Artist" />
+          <EntitySet Name="ms_Collection" EntityType="Self.ms_Collection" />
+          <EntitySet Name="ms_Genre" EntityType="Self.ms_Genre" />
+          <EntitySet Name="ms_Song" EntityType="Self.ms_Song" />
+          <EntitySet Name="system_RouteData" EntityType="Self.system_RouteData" />
+          <AssociationSet Name="ms_Album_Genre" Association="Self.ms_Album_Genre">
+            <End Role="ms_Album" EntitySet="ms_Album" />
+            <End Role="ms_Genre" EntitySet="ms_Genre" />
+          </AssociationSet>
+          <AssociationSet Name="ms_Artist_Album" Association="Self.ms_Artist_Album">
+            <End Role="ms_Album" EntitySet="ms_Album" />
+            <End Role="ms_Artist" EntitySet="ms_Artist" />
+          </AssociationSet>
+          <AssociationSet Name="ms_Song_Album" Association="Self.ms_Song_Album">
+            <End Role="ms_Album" EntitySet="ms_Album" />
+            <End Role="ms_Song" EntitySet="ms_Song" />
+          </AssociationSet>
+          <AssociationSet Name="ms_Song_Artist" Association="Self.ms_Song_Artist">
+            <End Role="ms_Artist" EntitySet="ms_Artist" />
+            <End Role="ms_Song" EntitySet="ms_Song" />
+          </AssociationSet>
+          <AssociationSet Name="ms_Song_Collection" Association="Self.ms_Song_Collection">
+            <End Role="ms_Collection" EntitySet="ms_Collection" />
+            <End Role="ms_Song" EntitySet="ms_Song" />
+          </AssociationSet>
+          <AssociationSet Name="ms_Song_Genre" Association="Self.ms_Song_Genre">
+            <End Role="ms_Genre" EntitySet="ms_Genre" />
+            <End Role="ms_Song" EntitySet="ms_Song" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="MusicStoreModelStoreContainer" CdmEntityContainer="MusicStoreEntities">
+          <EntitySetMapping Name="ms_Album">
+            <EntityTypeMapping TypeName="MusicStoreModel.ms_Album">
+              <MappingFragment StoreEntitySet="ms_Album">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Thumbnail" ColumnName="Thumbnail" />
+                <ScalarProperty Name="ReleaseDate" ColumnName="ReleaseDate" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="Url" ColumnName="Url" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ms_Artist">
+            <EntityTypeMapping TypeName="MusicStoreModel.ms_Artist">
+              <MappingFragment StoreEntitySet="ms_Artist">
+                <ScalarProperty Name="Thumbnail" ColumnName="Thumbnail" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="Url" ColumnName="Url" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ms_Collection">
+            <EntityTypeMapping TypeName="MusicStoreModel.ms_Collection">
+              <MappingFragment StoreEntitySet="ms_Collection">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Thumbnail" ColumnName="Thumbnail" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="Url" ColumnName="Url" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ms_Genre">
+            <EntityTypeMapping TypeName="MusicStoreModel.ms_Genre">
+              <MappingFragment StoreEntitySet="ms_Genre">
+                <ScalarProperty Name="Url" ColumnName="Url" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ms_Song">
+            <EntityTypeMapping TypeName="MusicStoreModel.ms_Song">
+              <MappingFragment StoreEntitySet="ms_Song">
+                <ScalarProperty Name="Duration" ColumnName="Duration" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="AlbumId" ColumnName="AlbumId" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Thumbnail" ColumnName="Thumbnail" />
+                <ScalarProperty Name="MediaUrl" ColumnName="MediaUrl" />
+                <ScalarProperty Name="Lyrics" ColumnName="Lyrics" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="Url" ColumnName="Url" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="system_RouteData">
+            <EntityTypeMapping TypeName="MusicStoreModel.system_RouteData">
+              <MappingFragment StoreEntitySet="system_RouteData">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Url" ColumnName="Url" />
+                <ScalarProperty Name="Controller" ColumnName="Controller" />
+                <ScalarProperty Name="Action" ColumnName="Action" />
+                <ScalarProperty Name="UrlId" ColumnName="UrlId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="ms_Album_Genre" TypeName="MusicStoreModel.ms_Album_Genre" StoreEntitySet="ms_Album_Genre">
+            <EndProperty Name="ms_Album">
+              <ScalarProperty Name="Id" ColumnName="AlbumId" />
+            </EndProperty>
+            <EndProperty Name="ms_Genre">
+              <ScalarProperty Name="Id" ColumnName="GenreId" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="ms_Artist_Album" TypeName="MusicStoreModel.ms_Artist_Album" StoreEntitySet="ms_Artist_Album">
+            <EndProperty Name="ms_Album">
+              <ScalarProperty Name="Id" ColumnName="AlbumId" />
+            </EndProperty>
+            <EndProperty Name="ms_Artist">
+              <ScalarProperty Name="Id" ColumnName="ArtistId" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="ms_Song_Album" TypeName="MusicStoreModel.ms_Song_Album" StoreEntitySet="ms_Song_Album">
+            <EndProperty Name="ms_Album">
+              <ScalarProperty Name="Id" ColumnName="AlbumId" />
+            </EndProperty>
+            <EndProperty Name="ms_Song">
+              <ScalarProperty Name="Id" ColumnName="SongId" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="ms_Song_Artist" TypeName="MusicStoreModel.ms_Song_Artist" StoreEntitySet="ms_Song_Artist">
+            <EndProperty Name="ms_Artist">
+              <ScalarProperty Name="Id" ColumnName="ArtistId" />
+            </EndProperty>
+            <EndProperty Name="ms_Song">
+              <ScalarProperty Name="Id" ColumnName="SongId" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="ms_Song_Collection" TypeName="MusicStoreModel.ms_Song_Collection" StoreEntitySet="ms_Song_Collection">
+            <EndProperty Name="ms_Collection">
+              <ScalarProperty Name="Id" ColumnName="CollectionId" />
+            </EndProperty>
+            <EndProperty Name="ms_Song">
+              <ScalarProperty Name="Id" ColumnName="SongId" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="ms_Song_Genre" TypeName="MusicStoreModel.ms_Song_Genre" StoreEntitySet="ms_Song_Genre">
+            <EndProperty Name="ms_Genre">
+              <ScalarProperty Name="Id" ColumnName="GenreId" />
+            </EndProperty>
+            <EndProperty Name="ms_Song">
+              <ScalarProperty Name="Id" ColumnName="SongId" />
+            </EndProperty>
+          </AssociationSetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
