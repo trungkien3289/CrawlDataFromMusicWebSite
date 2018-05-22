@@ -23,13 +23,14 @@ namespace CrawMusicWebSite
         public static string CDN_DOMAIN = "http://cdn.cristiana.fm/";
         public static string DOMAIN = "http://cristiana.fm/";
         public static string DOMAIN_WITHOUT_SLASH = "http://cristiana.fm";
-        public static string folderAlbumImagePath = @"D:\CrawlData\Album_Images";
-        public static string folderArtistImagePath = @"D:\CrawlData\Artist_Images";
-        public static string folderSongPath = @"D:\CrawlData\Album_Songs";
+        public static string folderAlbumImagePath = @"E:\CrawlData\Album_Images";
+        public static string folderArtistImagePath = @"E:\CrawlData\Artist_Images";
+        public static string folderSongPath = @"E:\CrawlData\Album_Songs";
         public static string[] AlbumCategory = new string[] { "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z", "0" };
 
         static void Main(string[] args)
         {
+            //GetListAlbumData();
             crawlAlbums();
             //MigrateData();
             //CrawlMusicFile();
@@ -37,6 +38,42 @@ namespace CrawMusicWebSite
         }
 
         #region Crawl data
+
+        public static void GetListAlbumData()
+        {
+            ScrapingBrowser Browser = new ScrapingBrowser();
+            Browser.AllowAutoRedirect = true; // Browser has settings you can access in setup
+            Browser.AllowMetaRedirect = true;
+            Browser.Encoding = Encoding.UTF8;
+            var albumCategoryLinks = getAlbumCategoryLinks();
+            if (albumCategoryLinks != null && albumCategoryLinks.Count > 0)
+            {
+                for (int i = 0; i < albumCategoryLinks.Count; i++)
+                {
+                    GetAlbumDataOfCategory(Browser, albumCategoryLinks[i]);
+                }
+            }
+        }
+
+        public static void GetAlbumDataOfCategory(ScrapingBrowser Browser, string albumCategoryLink)
+        {
+            WebPage PageResult = Browser.NavigateToPage(new Uri(albumCategoryLink));
+            GetAlbumsByPrefixResponse response = JsonConvert.DeserializeObject<GetAlbumsByPrefixResponse>(PageResult.ToString());
+            try
+            {
+                if (response.code == 0 && response.data != null && response.data.Count > 0)
+                {
+                    using (CrawlDatabaseEntities crawlDataContext = new CrawlDatabaseEntities())
+                    {
+                        crawlDataContext.Album_Data.AddRange(response.data);
+                        crawlDataContext.SaveChanges();
+                    }
+                }
+            }catch(Exception ex)
+            {
+                Console.WriteLine("Error on GetAlbumDataOfCategory: {0}", ex.Message);
+            }
+        }
 
         public static void crawlAlbums()
         {
@@ -46,16 +83,23 @@ namespace CrawMusicWebSite
             Browser.Encoding = Encoding.UTF8;
 
             var albumUrls = new List<string>();
-            var albumCategoryLinks = getAlbumCategoryLinks();
-            if (albumCategoryLinks != null && albumCategoryLinks.Count > 0)
+            //var albumCategoryLinks = getAlbumCategoryLinks();
+            //if (albumCategoryLinks != null && albumCategoryLinks.Count > 0)
+            //{
+            //    for (int i = 0; i < albumCategoryLinks.Count; i++)
+            //    {
+            //        albumUrls.AddRange(getAlbumLinks(Browser, albumCategoryLinks[i]));
+            //    }
+            //}
+
+            using (CrawlDatabaseEntities crawlDataContext = new CrawlDatabaseEntities())
             {
-                for (int i = 0; i < albumCategoryLinks.Count; i++)
-                {
-                    albumUrls.AddRange(getAlbumLinks(Browser, albumCategoryLinks[i]));
-                }
+                albumUrls = crawlDataContext.Album_Data.ToList().Select(a => DOMAIN_WITHOUT_SLASH + a.urlalbum).ToList();
             }
-            Console.WriteLine("Total album " + albumUrls.Count);
-            for (int i = 46; i < albumUrls.Count; i++)
+
+
+                Console.WriteLine("Total album " + albumUrls.Count);
+            for (int i = 0; i < albumUrls.Count; i++)
             {
                 Console.WriteLine("Begin album " + i);
                 Console.WriteLine("Album link: " + albumUrls[i]);
@@ -157,7 +201,7 @@ namespace CrawMusicWebSite
                 }
             }
 
-            bool isAlbumExisted = context.Albums.Where(a => a.Title == album.Title).Any();
+            bool isAlbumExisted = context.Albums.Where(a => a.Title == album.Title && a.ArtistName == album.ArtistName).Any();
             if (!isAlbumExisted)
             {
                 context.Albums.Add(album);
@@ -441,7 +485,7 @@ namespace CrawMusicWebSite
     {
         public int code { get; set; }
         public string message { get; set; }
-        public List<AlbumInforResponse> data { get; set; }
+        public List<Album_Data> data { get; set; }
     }
 
     public class AlbumInforResponse

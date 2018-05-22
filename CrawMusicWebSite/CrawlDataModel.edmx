@@ -19,6 +19,19 @@
           <Property Name="ArtistGuid" Type="nvarchar" MaxLength="100" />
           <Property Name="ArtistId" Type="int" />
         </EntityType>
+        <EntityType Name="Album_Data">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="album" Type="nvarchar(max)" />
+          <Property Name="artist" Type="nvarchar(max)" />
+          <Property Name="slug" Type="nvarchar(max)" />
+          <Property Name="urlalbum" Type="nvarchar(max)" />
+          <Property Name="image" Type="nvarchar(max)" />
+          <Property Name="year" Type="nvarchar" MaxLength="20" />
+          <Property Name="countSongs" Type="int" />
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+        </EntityType>
         <EntityType Name="Artist">
           <Key>
             <PropertyRef Name="Id" />
@@ -94,6 +107,7 @@
         </Association>
         <EntityContainer Name="CrawlDatabaseModelStoreContainer">
           <EntitySet Name="Album" EntityType="Self.Album" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Album_Data" EntityType="Self.Album_Data" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Artist" EntityType="Self.Artist" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="map_album_song" EntityType="Self.map_album_song" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Song" EntityType="Self.Song" Schema="dbo" store:Type="Tables" />
@@ -126,6 +140,7 @@
             <End Role="Album" EntitySet="Albums" />
             <End Role="Song" EntitySet="Songs" />
           </AssociationSet>
+          <EntitySet Name="Album_Data" EntityType="CrawlDatabaseModel.Album_Data" />
         </EntityContainer>
         <EntityType Name="Album">
           <Key>
@@ -190,6 +205,19 @@
           <End Type="CrawlDatabaseModel.Album" Role="Album" Multiplicity="*" />
           <End Type="CrawlDatabaseModel.Song" Role="Song" Multiplicity="*" />
         </Association>
+        <EntityType Name="Album_Data">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="album" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="artist" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="slug" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="urlalbum" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="image" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="year" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="countSongs" Type="Int32" />
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -250,6 +278,20 @@
               <ScalarProperty Name="Id" ColumnName="AlbumId" />
             </EndProperty>
           </AssociationSetMapping>
+          <EntitySetMapping Name="Album_Data">
+            <EntityTypeMapping TypeName="CrawlDatabaseModel.Album_Data">
+              <MappingFragment StoreEntitySet="Album_Data">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="countSongs" ColumnName="countSongs" />
+                <ScalarProperty Name="year" ColumnName="year" />
+                <ScalarProperty Name="image" ColumnName="image" />
+                <ScalarProperty Name="urlalbum" ColumnName="urlalbum" />
+                <ScalarProperty Name="slug" ColumnName="slug" />
+                <ScalarProperty Name="artist" ColumnName="artist" />
+                <ScalarProperty Name="album" ColumnName="album" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

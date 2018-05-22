@@ -14,6 +14,19 @@
     <Property Name="ArtistGuid" Type="nvarchar" MaxLength="100" />
     <Property Name="ArtistId" Type="int" />
   </EntityType>
+  <EntityType Name="Album_Data">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="album" Type="nvarchar(max)" />
+    <Property Name="artist" Type="nvarchar(max)" />
+    <Property Name="slug" Type="nvarchar(max)" />
+    <Property Name="urlalbum" Type="nvarchar(max)" />
+    <Property Name="image" Type="nvarchar(max)" />
+    <Property Name="year" Type="nvarchar" MaxLength="20" />
+    <Property Name="countSongs" Type="int" />
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+  </EntityType>
   <EntityType Name="Artist">
     <Key>
       <PropertyRef Name="Id" />
@@ -89,6 +102,7 @@
   </Association>
   <EntityContainer Name="CrawlDatabaseModelStoreContainer">
     <EntitySet Name="Album" EntityType="Self.Album" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Album_Data" EntityType="Self.Album_Data" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Artist" EntityType="Self.Artist" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="map_album_song" EntityType="Self.map_album_song" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Song" EntityType="Self.Song" Schema="dbo" store:Type="Tables" />

@@ -77,6 +77,9 @@
     <Compile Include="Album.cs">
       <DependentUpon>CrawlDataModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Album_Data.cs">
+      <DependentUpon>CrawlDataModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Artist.cs">
       <DependentUpon>CrawlDataModel.tt</DependentUpon>
     </Compile>
