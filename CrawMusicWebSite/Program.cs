@@ -390,10 +390,37 @@ namespace CrawMusicWebSite
             }
         }
         #endregion
+
+        #region Crawl genres
+        public static void CrawlGenres()
+        {
+            ScrapingBrowser Browser = new ScrapingBrowser();
+            Browser.AllowAutoRedirect = true; // Browser has settings you can access in setup
+            Browser.AllowMetaRedirect = true;
+            Browser.Encoding = Encoding.UTF8;
+            WebPage PageResult = Browser.NavigateToPage(new Uri("http://www.cristiana.fm/"));
+            var listGenreElements = PageResult.Html.CssSelect("#main .wdoc.center nav>#nav>#mnav>ul>li").ToList();
+
+            if(listGenreElements!=null && listGenreElements.Count > 0)
+            {
+                foreach (var item in listGenreElements)
+                {
+                    var newGenre = new GenreData();
+                    newGenre.Name = item.InnerText.Trim();
+                    newGenre.Url = item.CssSelect("a").First().GetAttributeValue("href");
+                }
+            }
+
+            List<string> genreList = listGenreElements.Select(g => g.InnerText.Trim()).ToList();
+
+
+        }
+
+        #endregion
     }
 
 
-#region model class
+    #region model class
     public class songlist
     {
         public Dictionary<Guid, cr_artists> artists { get; set; }
@@ -453,6 +480,12 @@ namespace CrawMusicWebSite
         public string image { get; set; }
         public string year { get; set; }
         public int countSongs { get; set; }
+    }
+
+    public class GenreData
+    {
+        public string Name { get; set; }
+        public string Url { get; set; }
     }
 }
 
