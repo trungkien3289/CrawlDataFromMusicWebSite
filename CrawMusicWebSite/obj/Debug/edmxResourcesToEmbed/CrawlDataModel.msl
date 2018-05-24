@@ -55,5 +55,19 @@
         <ScalarProperty Name="Id" ColumnName="AlbumId" />
       </EndProperty>
     </AssociationSetMapping>
+    <EntitySetMapping Name="Album_Data">
+      <EntityTypeMapping TypeName="CrawlDatabaseModel.Album_Data">
+        <MappingFragment StoreEntitySet="Album_Data">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="countSongs" ColumnName="countSongs" />
+          <ScalarProperty Name="year" ColumnName="year" />
+          <ScalarProperty Name="image" ColumnName="image" />
+          <ScalarProperty Name="urlalbum" ColumnName="urlalbum" />
+          <ScalarProperty Name="slug" ColumnName="slug" />
+          <ScalarProperty Name="artist" ColumnName="artist" />
+          <ScalarProperty Name="album" ColumnName="album" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
   </EntityContainerMapping>
 </Mapping>

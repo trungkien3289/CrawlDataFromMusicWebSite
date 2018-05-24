@@ -12,6 +12,7 @@
       <End Role="Album" EntitySet="Albums" />
       <End Role="Song" EntitySet="Songs" />
     </AssociationSet>
+    <EntitySet Name="Album_Data" EntityType="CrawlDatabaseModel.Album_Data" />
   </EntityContainer>
   <EntityType Name="Album">
     <Key>
@@ -76,4 +77,17 @@
     <End Type="CrawlDatabaseModel.Album" Role="Album" Multiplicity="*" />
     <End Type="CrawlDatabaseModel.Song" Role="Song" Multiplicity="*" />
   </Association>
+  <EntityType Name="Album_Data">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="album" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="artist" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="slug" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="urlalbum" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="image" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="year" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="countSongs" Type="Int32" />
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+  </EntityType>
 </Schema>
