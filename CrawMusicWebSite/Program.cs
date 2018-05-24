@@ -400,7 +400,7 @@ namespace CrawMusicWebSite
             Browser.Encoding = Encoding.UTF8;
             WebPage PageResult = Browser.NavigateToPage(new Uri("http://www.cristiana.fm/"));
             var listGenreElements = PageResult.Html.CssSelect("#main .wdoc.center nav>#nav>#mnav>ul>li").ToList();
-
+            List<GenreData> genres = new List<GenreData>();
             if(listGenreElements!=null && listGenreElements.Count > 0)
             {
                 foreach (var item in listGenreElements)
@@ -408,12 +408,16 @@ namespace CrawMusicWebSite
                     var newGenre = new GenreData();
                     newGenre.Name = item.InnerText.Trim();
                     newGenre.Url = item.CssSelect("a").First().GetAttributeValue("href");
+                    genres.Add(newGenre);
                 }
             }
 
-            List<string> genreList = listGenreElements.Select(g => g.InnerText.Trim()).ToList();
+            string linkGenreTemplate = "http://www.cristiana.fm/ajax/artist?t=1&siteId=2da0afc6-f506-4964-985b-36261ab4fdd0&genreSlug={0}&top=1000&page=1";
+            foreach (var item in genres)
+            {
+                string url = string.Format(linkGenreTemplate, item.Name);
 
-
+            }
         }
 
         #endregion
