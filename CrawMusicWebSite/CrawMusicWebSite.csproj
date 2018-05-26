@@ -99,6 +99,9 @@
       <DependentUpon>CrawlDataModel.edmx</DependentUpon>
     </Compile>
     <Compile Include="FileDownloader.cs" />
+    <Compile Include="Genre.cs">
+      <DependentUpon>CrawlDataModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="ImageDownloader.cs" />
     <Compile Include="ms_Album.cs">
       <DependentUpon>MusicModel.tt</DependentUpon>

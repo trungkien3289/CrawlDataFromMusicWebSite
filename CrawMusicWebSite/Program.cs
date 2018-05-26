@@ -31,9 +31,10 @@ namespace CrawMusicWebSite
         static void Main(string[] args)
         {
             //GetListAlbumData();
-            crawlAlbums();
+            //crawlAlbums();
+            //CrawlGenres();
             //MigrateData();
-            //CrawlMusicFile();
+            CrawlMusicFile();
             //GetDurationOfMusicFile();
         }
 
@@ -311,60 +312,121 @@ namespace CrawMusicWebSite
             MusicStoreEntities musicStoreContext = new MusicStoreEntities();
             CrawlDatabaseEntities crawlDataContext = new CrawlDatabaseEntities();
 
-            List<Album> cr_Albums = crawlDataContext.Albums.ToList();
+            //Console.WriteLine("Migrate Artist");
+            //List<Artist> cr_Artists = crawlDataContext.Artists.ToList();
+            //foreach (var item in cr_Artists)
+            //{
+            //    ms_Artist artist = new ms_Artist()
+            //    {
+            //        Name = item.Name,
+            //        Status = 1,
+            //        Url = item.Slug,
+            //        Thumbnail = Path.GetFileName(item.Thumbnail),
+            //    };
 
-            foreach (var item in cr_Albums)
+            //    musicStoreContext.ms_Artist.Add(artist);
+            //}
+            //musicStoreContext.SaveChanges();
+
+            //Console.WriteLine("Migrate Genre");
+            //List<Genre> cr_Genres = crawlDataContext.Genres.Include("Artists").ToList();
+            //foreach (var item in cr_Genres)
+            //{
+            //    ms_Genre genre = new ms_Genre()
+            //    {
+            //        Name = item.Name,
+            //        Status = 1,
+            //        Url = item.Slug,
+            //        Description = item.Description,
+            //    };
+
+            //    if(item.Artists != null && item.Artists.Count > 0)
+            //    {
+            //        foreach (var cr_artist in item.Artists)
+            //        {
+            //            var db_artist = musicStoreContext.ms_Artist.Where(a => a.Name == cr_artist.Name).FirstOrDefault();
+            //            if(db_artist != null)
+            //            {
+            //                genre.ms_Artist.Add(db_artist);
+            //            }
+            //        }
+            //    }
+
+            //    musicStoreContext.ms_Genre.Add(genre);
+            //}
+            //musicStoreContext.SaveChanges();
+
+            //Console.WriteLine("Migrate Album");
+            //List<Album> cr_Albums = crawlDataContext.Albums.Include("Artist").Include("Songs").ToList();
+
+            //foreach (var item in cr_Albums)
+            //{
+            //    ms_Album album = new ms_Album()
+            //    {
+            //        Title = item.Title,
+            //        Description = item.Description,
+            //        ReleaseDate = new DateTime(int.Parse(item.ReleaseDate), 1, 1),
+            //        Thumbnail = Path.GetFileName(item.Thumbnail),
+            //        Url = item.Slug,
+            //        Status = 1
+            //    };
+
+            //    var db_Artist = musicStoreContext.ms_Artist.Where(a => a.Name == item.ArtistName).FirstOrDefault();
+            //    if (db_Artist != null)
+            //    {
+            //        album.ms_Artist.Add(db_Artist);
+            //    }
+
+            //    musicStoreContext.ms_Album.Add(album);
+            //}
+            //musicStoreContext.SaveChanges();
+            List<Album> cr_Albums = crawlDataContext.Albums.Include("Artist").Include("Songs").ToList();
+            Console.WriteLine("Migrate Song of albums");
+            foreach (var cr_album in cr_Albums)
             {
-                ms_Album album = new ms_Album()
+                Console.WriteLine("Begin migrate song of album " + cr_album.Title);
+                var db_album = musicStoreContext.ms_Album.Include("ms_Artist").Where(a => a.Title == cr_album.Title  && a.ms_Artist.FirstOrDefault().Name == cr_album.ArtistName).FirstOrDefault();
+                if (db_album != null)
                 {
-                    Title = item.Title,
-                    Description = item.Description,
-                    ReleaseDate = new DateTime(int.Parse(item.ReleaseDate), 1, 1),
-                    Thumbnail = Path.GetFileName(item.Thumbnail),
-                    Url = item.Slug,
-                    Status = 1
-                };
+                    if (cr_album.Songs != null && cr_album.Songs.Count > 0)
+                    {
+                        foreach (var cr_song in cr_album.Songs)
+                        {
+                            var songMediaUrl = Path.GetFileName(cr_song.MediaUrl);
+                            var foundDbSong = musicStoreContext.ms_Song.Where(s => s.MediaUrl == songMediaUrl).FirstOrDefault();
+                            if (foundDbSong != null)
+                            {
+                                db_album.ms_Song.Add(foundDbSong);
+                            }
+                            else
+                            {
+                                ms_Song newSong = new ms_Song()
+                                {
+                                    Description = cr_song.Description,
+                                    Lyrics = cr_song.Lyrics,
+                                    MediaUrl = Path.GetFileName(cr_song.MediaUrl),
+                                    Status = 1,
+                                    Thumbnail = "",
+                                    Title = cr_song.Title,
+                                    Url = cr_song.Url,
+                                    Duration = cr_song.Duration
+                                };
 
-                var cr_Artist = crawlDataContext.Artists.Where(a => a.Guid == item.ArtistGuid).FirstOrDefault();
-                ms_Artist artist = null;
-                if (cr_Artist != null)
-                {
-                    artist = new ms_Artist()
-                    {
-                        Name = cr_Artist.Name,
-                        Url = cr_Artist.Slug,
-                        Thumbnail = Path.GetFileName(cr_Artist.Thumbnail),
-                        Status = 1
-                    };
-                    album.ms_Artist.Add(artist);
-                }
-                
-                album.ms_Song = new List<ms_Song>();
-                foreach (var song in item.Songs)
-                {
-                    var newSong = new ms_Song()
-                    {
-                        Description = song.Description,
-                        Lyrics = song.Lyrics,
-                        MediaUrl = Path.GetFileName(song.MediaUrl),
-                        Status = 1,
-                        Thumbnail = "",
-                        Title = song.Title,
-                        Url = song.Url,
-                        Duration = song.Duration
-                    };
-                    if (artist != null)
-                    {
-                        newSong.ms_Artist.Add(artist);
+                                var db_artist = db_album.ms_Artist.FirstOrDefault();
+                                if (db_artist != null)
+                                {
+                                    newSong.ms_Artist.Add(db_artist);
+                                }
+
+                                db_album.ms_Song.Add(newSong);
+                            }
+                        }
                     }
-                    album.ms_Song.Add(newSong);
                 }
 
-                musicStoreContext.ms_Album.Add(album);
-
+                musicStoreContext.SaveChanges();
+                Console.WriteLine("End migrate song of album " + cr_album.Title);
             }
-
-            musicStoreContext.SaveChanges();
         }
 
         #endregion
@@ -372,9 +434,27 @@ namespace CrawMusicWebSite
         #region Crawl Music File
         private static void CrawlMusicFile()
         {
+            int from = 0;
+            
+            bool result = false;
+            while (!result)
+            {
+                Console.Clear();
+                Console.WriteLine("Input the beginning song index");
+                result = int.TryParse(Console.ReadLine(), out from);
+            }
+
+            //result = false;
+            //while (!result)
+            //{
+            //    Console.WriteLine("Input the end song index");
+            //    Console.Clear();
+            //    result = int.TryParse(Console.ReadLine(), out to);
+            //}
+
             CrawlDatabaseEntities crawlDataContext = new CrawlDatabaseEntities();
             List<Song> songs = crawlDataContext.Songs.ToList();
-            for (int i = 0; i < songs.Count; i++)
+            for (int i = from; i < songs.Count; i++)
             {
                 var mp3FullPath = Path.Combine(folderSongPath, Path.GetFileName(songs[i].MediaUrl));
                 if (!File.Exists(mp3FullPath))
@@ -445,25 +525,106 @@ namespace CrawMusicWebSite
             WebPage PageResult = Browser.NavigateToPage(new Uri("http://www.cristiana.fm/"));
             var listGenreElements = PageResult.Html.CssSelect("#main .wdoc.center nav>#nav>#mnav>ul>li").ToList();
             List<GenreData> genres = new List<GenreData>();
-            if(listGenreElements!=null && listGenreElements.Count > 0)
+            if (listGenreElements!=null && listGenreElements.Count > 0)
             {
+
                 foreach (var item in listGenreElements)
                 {
                     var newGenre = new GenreData();
                     newGenre.Name = item.InnerText.Trim();
                     newGenre.Url = item.CssSelect("a").First().GetAttributeValue("href");
+                    newGenre.Slug = newGenre.Url.Replace("/g/", "").TrimEnd('/');
                     genres.Add(newGenre);
                 }
             }
 
             string linkGenreTemplate = "http://www.cristiana.fm/ajax/artist?t=1&siteId=2da0afc6-f506-4964-985b-36261ab4fdd0&genreSlug={0}&top=1000&page=1";
-            foreach (var item in genres)
+            Console.WriteLine("Total genre " + genres.Count);
+            using (CrawlDatabaseEntities crawlDataContext = new CrawlDatabaseEntities())
             {
-                string url = string.Format(linkGenreTemplate, item.Name);
+                foreach (var item in genres)
+                {
+                    Console.WriteLine("Begin genre: " + item.Name);
+                    string link = string.Format(linkGenreTemplate, item.Slug);
+                    var artists = GetArtistOfGenre(Browser, link);
+                    var listArtistEntity = new List<Artist>();
+                    if (artists != null)
+                    {
+                        foreach (var artist in artists)
+                        {
+                            var foundArtist = crawlDataContext.Artists.Where(a => a.Name == artist.artist).FirstOrDefault();
+                            if (foundArtist != null)
+                            {
+                                listArtistEntity.Add(foundArtist);
+                            }
+                            else
+                            {
+                                Artist newArtist = new Artist()
+                                {
+                                    Name = artist.artist,
+                                    Slug = artist.slug,
+                                    Thumbnail = artist.image
+                                };
+                                listArtistEntity.Add(newArtist);
+                            }
+                        }
+                    }
+
+                    Genre newGenre = new Genre()
+                    {
+                        Name = item.Name,
+                        Description = string.Empty,
+                        Status = 1,
+                        Url = item.Url,
+                        Slug = item.Slug,
+                        Artists = listArtistEntity
+                    };
+                    var foundGenre = crawlDataContext.Genres.Where(g => g.Name == newGenre.Name).FirstOrDefault();
+                    if (foundGenre == null)
+                    {
+                        crawlDataContext.Genres.Add(newGenre);
+                        crawlDataContext.SaveChanges();
+
+                        //for (int i = 0; i < listArtistEntity.Count; i++)
+                        //{
+                        //    var artistName = listArtistEntity[i].Name;
+                        //    var artistEntity = crawlDataContext.Artists.Where(a => a.Name == artistName).FirstOrDefault();
+                        //    if (artistEntity != null)
+                        //    {
+                        //        newGenre.Artists.Add(artistEntity);
+                        //    }
+                        //}
+
+                        //crawlDataContext.SaveChanges();
+                    }
+                    Console.WriteLine("End genre " + item.Name);
+                }
 
             }
         }
 
+        public static List<genre_artist> GetArtistOfGenre(ScrapingBrowser Browser, string link)
+        {
+            WebPage PageResult = Browser.NavigateToPage(new Uri(link));
+            var result = new List<genre_artist>();
+            GetArtistsOfGenreResponse response = JsonConvert.DeserializeObject<GetArtistsOfGenreResponse>(PageResult.ToString());
+            try
+            {
+                if (response.code == 0 && response.data != null && response.data.Count > 0)
+                {
+                    return response.data;
+                }
+                else
+                {
+                    return Enumerable.Empty<genre_artist>().ToList<genre_artist>();
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error on Get Artist Of Genre: {0}", ex.Message);
+                return Enumerable.Empty<genre_artist>().ToList<genre_artist>();
+            }
+        }
         #endregion
     }
 
@@ -534,6 +695,21 @@ namespace CrawMusicWebSite
     {
         public string Name { get; set; }
         public string Url { get; set; }
+        public string Slug { get; set; }
+    }
+
+    public class GetArtistsOfGenreResponse
+    {
+        public int code { get; set; }
+        public string message { get; set; }
+        public List<genre_artist> data { get; set; }
+    }
+
+    public class genre_artist
+    {
+        public string artist { get; set; }
+        public string slug { get; set; }
+        public string image { get; set; }
     }
 }
 

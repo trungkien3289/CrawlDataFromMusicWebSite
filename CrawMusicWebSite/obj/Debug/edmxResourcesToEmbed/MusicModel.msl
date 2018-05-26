@@ -37,17 +37,6 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="ms_Genre">
-      <EntityTypeMapping TypeName="MusicStoreModel.ms_Genre">
-        <MappingFragment StoreEntitySet="ms_Genre">
-          <ScalarProperty Name="Url" ColumnName="Url" />
-          <ScalarProperty Name="Id" ColumnName="Id" />
-          <ScalarProperty Name="Name" ColumnName="Name" />
-          <ScalarProperty Name="Description" ColumnName="Description" />
-          <ScalarProperty Name="Status" ColumnName="Status" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="ms_Song">
       <EntityTypeMapping TypeName="MusicStoreModel.ms_Song">
         <MappingFragment StoreEntitySet="ms_Song">
@@ -75,14 +64,6 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <AssociationSetMapping Name="ms_Album_Genre" TypeName="MusicStoreModel.ms_Album_Genre" StoreEntitySet="ms_Album_Genre">
-      <EndProperty Name="ms_Album">
-        <ScalarProperty Name="Id" ColumnName="AlbumId" />
-      </EndProperty>
-      <EndProperty Name="ms_Genre">
-        <ScalarProperty Name="Id" ColumnName="GenreId" />
-      </EndProperty>
-    </AssociationSetMapping>
     <AssociationSetMapping Name="ms_Artist_Album" TypeName="MusicStoreModel.ms_Artist_Album" StoreEntitySet="ms_Artist_Album">
       <EndProperty Name="ms_Album">
         <ScalarProperty Name="Id" ColumnName="AlbumId" />
@@ -115,12 +96,39 @@
         <ScalarProperty Name="Id" ColumnName="SongId" />
       </EndProperty>
     </AssociationSetMapping>
-    <AssociationSetMapping Name="ms_Song_Genre" TypeName="MusicStoreModel.ms_Song_Genre" StoreEntitySet="ms_Song_Genre">
+    <EntitySetMapping Name="ms_Genre">
+      <EntityTypeMapping TypeName="MusicStoreModel.ms_Genre">
+        <MappingFragment StoreEntitySet="ms_Genre">
+          <ScalarProperty Name="Url" ColumnName="Url" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <AssociationSetMapping Name="ms_Album_Genre" TypeName="MusicStoreModel.ms_Album_Genre" StoreEntitySet="ms_Album_Genre">
       <EndProperty Name="ms_Genre">
         <ScalarProperty Name="Id" ColumnName="GenreId" />
       </EndProperty>
+      <EndProperty Name="ms_Album">
+        <ScalarProperty Name="Id" ColumnName="AlbumId" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="ms_Artist_Genre" TypeName="MusicStoreModel.ms_Artist_Genre" StoreEntitySet="ms_Artist_Genre">
+      <EndProperty Name="ms_Genre">
+        <ScalarProperty Name="Id" ColumnName="GenreId" />
+      </EndProperty>
+      <EndProperty Name="ms_Artist">
+        <ScalarProperty Name="Id" ColumnName="ArtistId" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="ms_Song_Genre" TypeName="MusicStoreModel.ms_Song_Genre" StoreEntitySet="ms_Song_Genre">
       <EndProperty Name="ms_Song">
         <ScalarProperty Name="Id" ColumnName="SongId" />
+      </EndProperty>
+      <EndProperty Name="ms_Genre">
+        <ScalarProperty Name="Id" ColumnName="GenreId" />
       </EndProperty>
     </AssociationSetMapping>
   </EntityContainerMapping>

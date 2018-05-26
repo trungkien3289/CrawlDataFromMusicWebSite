@@ -8,15 +8,16 @@
         <EntityTypeShape EntityType="MusicStoreModel.ms_Album" Width="1.5" PointX="0.75" PointY="2.875" IsExpanded="true" />
         <EntityTypeShape EntityType="MusicStoreModel.ms_Artist" Width="1.5" PointX="3" PointY="1.875" IsExpanded="true" />
         <EntityTypeShape EntityType="MusicStoreModel.ms_Collection" Width="1.5" PointX="3" PointY="9.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="MusicStoreModel.ms_Genre" Width="1.5" PointX="3" PointY="4.75" IsExpanded="true" />
         <EntityTypeShape EntityType="MusicStoreModel.ms_Song" Width="1.5" PointX="5.25" PointY="2.625" IsExpanded="true" />
         <EntityTypeShape EntityType="MusicStoreModel.system_RouteData" Width="1.5" PointX="7.75" PointY="0.75" IsExpanded="true" />
-        <AssociationConnector Association="MusicStoreModel.ms_Album_Genre" ManuallyRouted="false" />
         <AssociationConnector Association="MusicStoreModel.ms_Artist_Album" ManuallyRouted="false" />
         <AssociationConnector Association="MusicStoreModel.ms_Song_Album" ManuallyRouted="false" />
         <AssociationConnector Association="MusicStoreModel.ms_Song_Artist" ManuallyRouted="false" />
         <AssociationConnector Association="MusicStoreModel.ms_Song_Collection" ManuallyRouted="false" />
-        <AssociationConnector Association="MusicStoreModel.ms_Song_Genre" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="MusicStoreModel.ms_Genre" Width="1.5" PointX="3" PointY="5.75" />
+        <AssociationConnector Association="MusicStoreModel.ms_Album_Genre" />
+        <AssociationConnector Association="MusicStoreModel.ms_Artist_Genre" />
+        <AssociationConnector Association="MusicStoreModel.ms_Song_Genre" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

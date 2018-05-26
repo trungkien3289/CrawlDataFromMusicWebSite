@@ -37,6 +37,17 @@
     <Property Name="Thumbnail" Type="nvarchar" MaxLength="300" />
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
   </EntityType>
+  <EntityType Name="Genre">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar(max)" />
+    <Property Name="Description" Type="nvarchar(max)" />
+    <Property Name="Status" Type="int" />
+    <Property Name="Url" Type="nvarchar(max)" />
+    <Property Name="Slug" Type="nvarchar(max)" />
+  </EntityType>
   <EntityType Name="map_album_song">
     <Key>
       <PropertyRef Name="AlbumId" />
@@ -44,6 +55,14 @@
     </Key>
     <Property Name="AlbumId" Type="int" Nullable="false" />
     <Property Name="SongId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="map_genre_artist">
+    <Key>
+      <PropertyRef Name="GenreId" />
+      <PropertyRef Name="ArtistId" />
+    </Key>
+    <Property Name="GenreId" Type="int" Nullable="false" />
+    <Property Name="ArtistId" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="Song">
     <Key>
@@ -100,11 +119,37 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_map_genre_artist_Artist">
+    <End Role="Artist" Type="Self.Artist" Multiplicity="1" />
+    <End Role="map_genre_artist" Type="Self.map_genre_artist" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Artist">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="map_genre_artist">
+        <PropertyRef Name="ArtistId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_map_genre_artist_Genre">
+    <End Role="Genre" Type="Self.Genre" Multiplicity="1" />
+    <End Role="map_genre_artist" Type="Self.map_genre_artist" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Genre">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="map_genre_artist">
+        <PropertyRef Name="GenreId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <EntityContainer Name="CrawlDatabaseModelStoreContainer">
     <EntitySet Name="Album" EntityType="Self.Album" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Album_Data" EntityType="Self.Album_Data" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Artist" EntityType="Self.Artist" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Genre" EntityType="Self.Genre" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="map_album_song" EntityType="Self.map_album_song" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="map_genre_artist" EntityType="Self.map_genre_artist" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Song" EntityType="Self.Song" Schema="dbo" store:Type="Tables" />
     <AssociationSet Name="FK_Album_Artist" Association="Self.FK_Album_Artist">
       <End Role="Artist" EntitySet="Artist" />
@@ -117,6 +162,14 @@
     <AssociationSet Name="FK_map_album_song_Song" Association="Self.FK_map_album_song_Song">
       <End Role="Song" EntitySet="Song" />
       <End Role="map_album_song" EntitySet="map_album_song" />
+    </AssociationSet>
+    <AssociationSet Name="FK_map_genre_artist_Artist" Association="Self.FK_map_genre_artist_Artist">
+      <End Role="Artist" EntitySet="Artist" />
+      <End Role="map_genre_artist" EntitySet="map_genre_artist" />
+    </AssociationSet>
+    <AssociationSet Name="FK_map_genre_artist_Genre" Association="Self.FK_map_genre_artist_Genre">
+      <End Role="Genre" EntitySet="Genre" />
+      <End Role="map_genre_artist" EntitySet="map_genre_artist" />
     </AssociationSet>
   </EntityContainer>
 </Schema>

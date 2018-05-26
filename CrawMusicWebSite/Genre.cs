@@ -12,14 +12,12 @@ namespace CrawMusicWebSite
     using System;
     using System.Collections.Generic;
     
-    public partial class ms_Genre
+    public partial class Genre
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public ms_Genre()
+        public Genre()
         {
-            this.ms_Album = new HashSet<ms_Album>();
-            this.ms_Artist = new HashSet<ms_Artist>();
-            this.ms_Song = new HashSet<ms_Song>();
+            this.Artists = new HashSet<Artist>();
         }
     
         public int Id { get; set; }
@@ -27,12 +25,9 @@ namespace CrawMusicWebSite
         public string Description { get; set; }
         public Nullable<int> Status { get; set; }
         public string Url { get; set; }
+        public string Slug { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<ms_Album> ms_Album { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<ms_Artist> ms_Artist { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<ms_Song> ms_Song { get; set; }
+        public virtual ICollection<Artist> Artists { get; set; }
     }
 }

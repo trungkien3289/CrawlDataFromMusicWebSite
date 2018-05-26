@@ -11,6 +11,8 @@
         <EntityTypeShape EntityType="CrawlDatabaseModel.Song" Width="1.5" PointX="9" PointY="0.875" />
         <AssociationConnector Association="CrawlDatabaseModel.map_album_song" />
         <EntityTypeShape EntityType="CrawlDatabaseModel.Album_Data" Width="1.5" PointX="0.75" PointY="4.75" />
+        <EntityTypeShape EntityType="CrawlDatabaseModel.Genre" Width="1.5" PointX="3" PointY="5.875" />
+        <AssociationConnector Association="CrawlDatabaseModel.map_genre_artist" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

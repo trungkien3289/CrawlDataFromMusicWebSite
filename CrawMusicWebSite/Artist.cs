@@ -18,6 +18,7 @@ namespace CrawMusicWebSite
         public Artist()
         {
             this.Albums = new HashSet<Album>();
+            this.Genres = new HashSet<Genre>();
         }
     
         public string Guid { get; set; }
@@ -28,5 +29,7 @@ namespace CrawMusicWebSite
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Album> Albums { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Genre> Genres { get; set; }
     }
 }

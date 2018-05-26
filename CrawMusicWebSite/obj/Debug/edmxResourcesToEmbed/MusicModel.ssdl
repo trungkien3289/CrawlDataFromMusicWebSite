@@ -38,6 +38,14 @@
     <Property Name="ArtistId" Type="int" Nullable="false" />
     <Property Name="AlbumId" Type="int" Nullable="false" />
   </EntityType>
+  <EntityType Name="ms_Artist_Genre">
+    <Key>
+      <PropertyRef Name="ArtistId" />
+      <PropertyRef Name="GenreId" />
+    </Key>
+    <Property Name="ArtistId" Type="int" Nullable="false" />
+    <Property Name="GenreId" Type="int" Nullable="false" />
+  </EntityType>
   <EntityType Name="ms_Collection">
     <Key>
       <PropertyRef Name="Id" />
@@ -172,6 +180,34 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_dbo_ms_Artist_Genre_dbo_ms_Artist_ArtistId">
+    <End Role="ms_Artist" Type="Self.ms_Artist" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="ms_Artist_Genre" Type="Self.ms_Artist_Genre" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ms_Artist">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ms_Artist_Genre">
+        <PropertyRef Name="ArtistId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_dbo_ms_Artist_Genre_dbo_ms_Genre_GenreId">
+    <End Role="ms_Genre" Type="Self.ms_Genre" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="ms_Artist_Genre" Type="Self.ms_Artist_Genre" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ms_Genre">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ms_Artist_Genre">
+        <PropertyRef Name="GenreId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_dbo_ms_Song_Album_dbo_ms_Album_AlbumId">
     <End Role="ms_Album" Type="Self.ms_Album" Multiplicity="1">
       <OnDelete Action="Cascade" />
@@ -289,6 +325,7 @@
     <EntitySet Name="ms_Album_Genre" EntityType="Self.ms_Album_Genre" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="ms_Artist" EntityType="Self.ms_Artist" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="ms_Artist_Album" EntityType="Self.ms_Artist_Album" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ms_Artist_Genre" EntityType="Self.ms_Artist_Genre" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="ms_Collection" EntityType="Self.ms_Collection" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="ms_Genre" EntityType="Self.ms_Genre" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="ms_Song" EntityType="Self.ms_Song" Schema="dbo" store:Type="Tables" />
@@ -312,6 +349,14 @@
     <AssociationSet Name="FK_dbo_ms_Artist_Album_dbo_ms_Artist_ArtistId" Association="Self.FK_dbo_ms_Artist_Album_dbo_ms_Artist_ArtistId">
       <End Role="ms_Artist" EntitySet="ms_Artist" />
       <End Role="ms_Artist_Album" EntitySet="ms_Artist_Album" />
+    </AssociationSet>
+    <AssociationSet Name="FK_dbo_ms_Artist_Genre_dbo_ms_Artist_ArtistId" Association="Self.FK_dbo_ms_Artist_Genre_dbo_ms_Artist_ArtistId">
+      <End Role="ms_Artist" EntitySet="ms_Artist" />
+      <End Role="ms_Artist_Genre" EntitySet="ms_Artist_Genre" />
+    </AssociationSet>
+    <AssociationSet Name="FK_dbo_ms_Artist_Genre_dbo_ms_Genre_GenreId" Association="Self.FK_dbo_ms_Artist_Genre_dbo_ms_Genre_GenreId">
+      <End Role="ms_Genre" EntitySet="ms_Genre" />
+      <End Role="ms_Artist_Genre" EntitySet="ms_Artist_Genre" />
     </AssociationSet>
     <AssociationSet Name="FK_dbo_ms_Song_Album_dbo_ms_Album_AlbumId" Association="Self.FK_dbo_ms_Song_Album_dbo_ms_Album_AlbumId">
       <End Role="ms_Album" EntitySet="ms_Album" />

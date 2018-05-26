@@ -29,5 +29,6 @@ namespace CrawMusicWebSite
         public virtual DbSet<Artist> Artists { get; set; }
         public virtual DbSet<Song> Songs { get; set; }
         public virtual DbSet<Album_Data> Album_Data { get; set; }
+        public virtual DbSet<Genre> Genres { get; set; }
     }
 }
