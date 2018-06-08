@@ -25,7 +25,7 @@ namespace CrawMusicWebSite
         public static string DOMAIN_WITHOUT_SLASH = "http://cristiana.fm";
         public static string folderAlbumImagePath = @"E:\CrawlData\Album_Images";
         public static string folderArtistImagePath = @"E:\CrawlData\Artist_Images";
-        public static string folderSongPath = @"E:\CrawlData\Album_Songs";
+        public static string folderSongPath = @"C:\Music Store Web\PublishOutput\Data\Album_Songs";
         public static string[] AlbumCategory = new string[] { "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z", "0" };
 
         static void Main(string[] args)
