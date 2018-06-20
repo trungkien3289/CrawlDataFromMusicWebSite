@@ -13,6 +13,9 @@
         <EntityTypeShape EntityType="CrawlDatabaseModel.Album_Data" Width="1.5" PointX="0.75" PointY="4.75" />
         <EntityTypeShape EntityType="CrawlDatabaseModel.Genre" Width="1.5" PointX="3" PointY="5.875" />
         <AssociationConnector Association="CrawlDatabaseModel.map_genre_artist" />
+        <EntityTypeShape EntityType="CrawlDatabaseModel.Collection" Width="1.5" PointX="5.375" PointY="5.75" />
+        <EntityTypeShape EntityType="CrawlDatabaseModel.map_collection_song" Width="1.5" PointX="7.375" PointY="5.75" />
+        <AssociationConnector Association="CrawlDatabaseModel.FK_map_collection_song_Collection" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

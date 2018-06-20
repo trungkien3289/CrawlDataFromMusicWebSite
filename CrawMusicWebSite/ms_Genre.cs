@@ -27,6 +27,7 @@ namespace CrawMusicWebSite
         public string Description { get; set; }
         public Nullable<int> Status { get; set; }
         public string Url { get; set; }
+        public string Thumbnail { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ms_Album> ms_Album { get; set; }

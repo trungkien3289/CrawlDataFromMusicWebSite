@@ -11,6 +11,7 @@
     <Property Name="ReleaseDate" Type="datetime" />
     <Property Name="Status" Type="int" />
     <Property Name="Url" Type="nvarchar(max)" />
+    <Property Name="IsFeatured" Type="bit" Nullable="false" />
   </EntityType>
   <EntityType Name="ms_Album_Genre">
     <Key>
@@ -29,6 +30,7 @@
     <Property Name="Status" Type="int" />
     <Property Name="Url" Type="nvarchar(max)" />
     <Property Name="Thumbnail" Type="nvarchar(max)" />
+    <Property Name="IsFeatured" Type="bit" Nullable="false" />
   </EntityType>
   <EntityType Name="ms_Artist_Album">
     <Key>
@@ -66,6 +68,7 @@
     <Property Name="Description" Type="nvarchar(max)" />
     <Property Name="Status" Type="int" />
     <Property Name="Url" Type="nvarchar(max)" />
+    <Property Name="Thumbnail" Type="nvarchar(max)" />
   </EntityType>
   <EntityType Name="ms_Song">
     <Key>
@@ -81,6 +84,8 @@
     <Property Name="Status" Type="int" />
     <Property Name="Url" Type="nvarchar(max)" />
     <Property Name="Duration" Type="float" />
+    <Property Name="IsFeatured" Type="bit" Nullable="false" />
+    <Property Name="Quality" Type="nvarchar(max)" />
   </EntityType>
   <EntityType Name="ms_Song_Album">
     <Key>

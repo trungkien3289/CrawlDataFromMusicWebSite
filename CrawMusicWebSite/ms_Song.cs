@@ -33,6 +33,8 @@ namespace CrawMusicWebSite
         public Nullable<int> Status { get; set; }
         public string Url { get; set; }
         public Nullable<double> Duration { get; set; }
+        public bool IsFeatured { get; set; }
+        public Nullable<double> Quality { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ms_Album> ms_Album { get; set; }

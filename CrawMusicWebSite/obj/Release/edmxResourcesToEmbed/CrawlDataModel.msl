@@ -1,0 +1,93 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="CrawlDatabaseModelStoreContainer" CdmEntityContainer="CrawlDatabaseEntities">
+    <EntitySetMapping Name="Albums">
+      <EntityTypeMapping TypeName="CrawlDatabaseModel.Album">
+        <MappingFragment StoreEntitySet="Album">
+          <ScalarProperty Name="ArtistId" ColumnName="ArtistId" />
+          <ScalarProperty Name="ArtistGuid" ColumnName="ArtistGuid" />
+          <ScalarProperty Name="Slug" ColumnName="Slug" />
+          <ScalarProperty Name="ReleaseDate" ColumnName="ReleaseDate" />
+          <ScalarProperty Name="Thumbnail" ColumnName="Thumbnail" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="ArtistName" ColumnName="ArtistName" />
+          <ScalarProperty Name="Title" ColumnName="Title" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Artists">
+      <EntityTypeMapping TypeName="CrawlDatabaseModel.Artist">
+        <MappingFragment StoreEntitySet="Artist">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Thumbnail" ColumnName="Thumbnail" />
+          <ScalarProperty Name="Slug" ColumnName="Slug" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Guid" ColumnName="Guid" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Songs">
+      <EntityTypeMapping TypeName="CrawlDatabaseModel.Song">
+        <MappingFragment StoreEntitySet="Song">
+          <ScalarProperty Name="Duration" ColumnName="Duration" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Url" ColumnName="Url" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="Lyrics" ColumnName="Lyrics" />
+          <ScalarProperty Name="MediaUrl" ColumnName="MediaUrl" />
+          <ScalarProperty Name="Thumbnail" ColumnName="Thumbnail" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="Title" ColumnName="Title" />
+          <ScalarProperty Name="ArtistSlug" ColumnName="ArtistSlug" />
+          <ScalarProperty Name="ArtistGuid" ColumnName="ArtistGuid" />
+          <ScalarProperty Name="AlbumSlug" ColumnName="AlbumSlug" />
+          <ScalarProperty Name="AlbumGuid" ColumnName="AlbumGuid" />
+          <ScalarProperty Name="Guid" ColumnName="Guid" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <AssociationSetMapping Name="map_album_song" TypeName="CrawlDatabaseModel.map_album_song" StoreEntitySet="map_album_song">
+      <EndProperty Name="Song">
+        <ScalarProperty Name="Id" ColumnName="SongId" />
+      </EndProperty>
+      <EndProperty Name="Album">
+        <ScalarProperty Name="Id" ColumnName="AlbumId" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <EntitySetMapping Name="Album_Data">
+      <EntityTypeMapping TypeName="CrawlDatabaseModel.Album_Data">
+        <MappingFragment StoreEntitySet="Album_Data">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="countSongs" ColumnName="countSongs" />
+          <ScalarProperty Name="year" ColumnName="year" />
+          <ScalarProperty Name="image" ColumnName="image" />
+          <ScalarProperty Name="urlalbum" ColumnName="urlalbum" />
+          <ScalarProperty Name="slug" ColumnName="slug" />
+          <ScalarProperty Name="artist" ColumnName="artist" />
+          <ScalarProperty Name="album" ColumnName="album" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Genres">
+      <EntityTypeMapping TypeName="CrawlDatabaseModel.Genre">
+        <MappingFragment StoreEntitySet="Genre">
+          <ScalarProperty Name="Slug" ColumnName="Slug" />
+          <ScalarProperty Name="Url" ColumnName="Url" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <AssociationSetMapping Name="map_genre_artist" TypeName="CrawlDatabaseModel.map_genre_artist" StoreEntitySet="map_genre_artist">
+      <EndProperty Name="Genre">
+        <ScalarProperty Name="Id" ColumnName="GenreId" />
+      </EndProperty>
+      <EndProperty Name="Artist">
+        <ScalarProperty Name="Id" ColumnName="ArtistId" />
+      </EndProperty>
+    </AssociationSetMapping>
+  </EntityContainerMapping>
+</Mapping>

@@ -5,6 +5,7 @@ using ScrapySharp.Extensions;
 using ScrapySharp.Network;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -26,6 +27,7 @@ namespace CrawMusicWebSite
         public static string folderAlbumImagePath = @"E:\CrawlData\Album_Images";
         public static string folderArtistImagePath = @"E:\CrawlData\Artist_Images";
         public static string folderSongPath = @"C:\Music Store Web\PublishOutput\Data\Album_Songs";
+        //public static string folderSongPath = @"E:\CrawlData\Album_Songs";
         public static string[] AlbumCategory = new string[] { "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z", "0" };
 
         static void Main(string[] args)
@@ -34,8 +36,8 @@ namespace CrawMusicWebSite
             //crawlAlbums();
             //CrawlGenres();
             //MigrateData();
-            CrawlMusicFile();
-            //GetDurationOfMusicFile();
+            //CrawlMusicFile();
+            GetDurationOfMusicFile();
         }
 
         #region Crawl data
@@ -220,6 +222,67 @@ namespace CrawMusicWebSite
             //}
 
             return null;
+        }
+
+
+        public static List<string> GetCollectionPageLinks()
+        {
+            List<string> links = new List<string>();
+            var listCollectionLinksAfterCharacters = new List<string>();
+            string collectionLinkTemplate = "http://www.cristiana.fm/last-playlist/{0}/";
+            for (int i = 0; i < AlbumCategory.Length; i++)
+            {
+                listCollectionLinksAfterCharacters.Add(string.Format(collectionLinkTemplate, AlbumCategory[i]));
+            }
+
+            return listCollectionLinksAfterCharacters;
+        }
+
+        public static void GetCollectionDetailPage()
+        {
+            var collectionPages = GetCollectionPageLinks();
+            var collectionDetailLinks = new List<string>();
+            ScrapingBrowser Browser = new ScrapingBrowser();
+            Browser.AllowAutoRedirect = true; // Browser has settings you can access in setup
+            Browser.AllowMetaRedirect = true;
+            Browser.Encoding = Encoding.UTF8;
+            List<Collection_Data> collections = new List<Collection_Data>();
+
+            for (int i = 0; i < collectionPages.Count; i++)
+            {
+                WebPage PageResult = Browser.NavigateToPage(new Uri(collectionPages[i]));
+                var listCollectionElements = PageResult.Html.CssSelect("#t-playlist article").ToList();
+                if (listCollectionElements != null && listCollectionElements.Count > 0)
+                {
+                    foreach (var item in listCollectionElements)
+                    {
+                        var collection = new Collection_Data();
+                        collection.Title = item.InnerText.Trim();
+                        collection.Url = DOMAIN_WITHOUT_SLASH + item.CssSelect("a").First().GetAttributeValue("href");
+                        collections.Add(collection);
+                    }
+                }
+            }
+            using (CrawlDatabaseEntities crawlDataContext = new CrawlDatabaseEntities())
+            {
+                foreach (var item in collections)
+                {
+                    var newCollection = CrawlCollectionDetails(Browser, item.Url);
+                }
+            }
+        }
+
+        public static Collection CrawlCollectionDetails(ScrapingBrowser Browser, string collectionLink)
+        {
+
+            WebPage PageResult = Browser.NavigateToPage(new Uri(collectionLink));
+            Collection result = new Collection();
+            result.Title = PageResult.Html.CssSelect("#artist-info>article>header>h1:first").First().InnerText;
+            result.Thumbnail = PageResult.Html.CssSelect("#MainContent_MainImage").First().GetAttributeValue("src");
+            result.Url = collectionLink;
+            result.Description = String.Empty;
+            result.map_collection_song = new List<map_collection_song>();
+            return result;
         }
 
         public static Song FetchSong(ScrapingBrowser Browser, songlist albumData,Guid songGuid, CrawlDatabaseEntities context)
@@ -477,39 +540,31 @@ namespace CrawMusicWebSite
         #region add duration for mp3 files
         public static void GetDurationOfMusicFile()
         {
-            CrawlDatabaseEntities crawlDataContext = new CrawlDatabaseEntities();
-            List<Song> songs = crawlDataContext.Songs.ToList();
+            MusicStoreEntities musicStoreContext = new MusicStoreEntities();
+            List<ms_Song> songs = musicStoreContext.ms_Song.ToList();
             for (int i = 0; i < songs.Count; i++)
             {
                 var mp3FullPath = Path.Combine(folderSongPath, Path.GetFileName(songs[i].MediaUrl));
+                Console.WriteLine(mp3FullPath);
                 int songId = songs[i].Id;
-                var songModel = crawlDataContext.Songs.Where(s => s.Id == songId).FirstOrDefault();
+                var songModel = musicStoreContext.ms_Song.Where(s => s.Id == songId).FirstOrDefault();
                 if (File.Exists(mp3FullPath))
                 {
                     try
                     {
                         Mp3FileReader reader = new Mp3FileReader(mp3FullPath);
                         TimeSpan duration = reader.TotalTime;
-                        Console.WriteLine(mp3FullPath);
-                        Console.WriteLine(duration.TotalMilliseconds);
-                        songModel.Duration = duration.TotalMilliseconds;
-                        crawlDataContext.SaveChanges();
+                        float ratebit = reader.Id3v1Tag != null ? reader.Id3v1Tag.Length : 128;
+
+                        Console.WriteLine(duration.TotalSeconds);
+                        songModel.Duration = duration.TotalSeconds;
+                        songModel.Quality = ratebit;
+                        musicStoreContext.SaveChanges();
                     }
                     catch(Exception ex)
                     {
 
                     }
-                    
-                    //Console.WriteLine((i + 1) + ". Start download file " + mp3FullPath);
-                    //try
-                    //{
-                    //    var success = FileDownloader.DownloadFile(songs[i].MediaUrl, mp3FullPath, 1200000);
-                    //    Console.WriteLine("Done  - success: " + success);
-                    //}
-                    //catch (Exception ex)
-                    //{
-                    //    Console.WriteLine("Fail: " + (i + 1) + ": " + mp3FullPath);
-                    //}
                 }
             }
         }
@@ -710,6 +765,12 @@ namespace CrawMusicWebSite
         public string artist { get; set; }
         public string slug { get; set; }
         public string image { get; set; }
+    }
+
+    public class Collection_Data
+    {
+        public string Title { get; set; }
+        public string Url { get; set; }
     }
 }
 

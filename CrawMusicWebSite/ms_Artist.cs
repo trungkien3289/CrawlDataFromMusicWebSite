@@ -18,8 +18,8 @@ namespace CrawMusicWebSite
         public ms_Artist()
         {
             this.ms_Album = new HashSet<ms_Album>();
-            this.ms_Song = new HashSet<ms_Song>();
             this.ms_Genre = new HashSet<ms_Genre>();
+            this.ms_Song = new HashSet<ms_Song>();
         }
     
         public int Id { get; set; }
@@ -27,12 +27,13 @@ namespace CrawMusicWebSite
         public Nullable<int> Status { get; set; }
         public string Url { get; set; }
         public string Thumbnail { get; set; }
+        public bool IsFeatured { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ms_Album> ms_Album { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<ms_Song> ms_Song { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ms_Genre> ms_Genre { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<ms_Song> ms_Song { get; set; }
     }
 }

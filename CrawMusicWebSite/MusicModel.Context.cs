@@ -28,8 +28,8 @@ namespace CrawMusicWebSite
         public virtual DbSet<ms_Album> ms_Album { get; set; }
         public virtual DbSet<ms_Artist> ms_Artist { get; set; }
         public virtual DbSet<ms_Collection> ms_Collection { get; set; }
-        public virtual DbSet<ms_Song> ms_Song { get; set; }
         public virtual DbSet<system_RouteData> system_RouteData { get; set; }
         public virtual DbSet<ms_Genre> ms_Genre { get; set; }
+        public virtual DbSet<ms_Song> ms_Song { get; set; }
     }
 }

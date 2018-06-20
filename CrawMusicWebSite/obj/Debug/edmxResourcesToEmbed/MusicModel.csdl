@@ -14,6 +14,7 @@
     <NavigationProperty Name="ms_Artist" Relationship="Self.ms_Artist_Album" FromRole="ms_Album" ToRole="ms_Artist" />
     <NavigationProperty Name="ms_Song" Relationship="Self.ms_Song_Album" FromRole="ms_Album" ToRole="ms_Song" />
     <NavigationProperty Name="ms_Genre" Relationship="MusicStoreModel.ms_Album_Genre" FromRole="ms_Album" ToRole="ms_Genre" />
+    <Property Name="IsFeatured" Type="Boolean" Nullable="false" />
   </EntityType>
   <EntityType Name="ms_Artist">
     <Key>
@@ -27,6 +28,7 @@
     <NavigationProperty Name="ms_Song" Relationship="Self.ms_Song_Artist" FromRole="ms_Artist" ToRole="ms_Song" />
     <Property Name="Thumbnail" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
     <NavigationProperty Name="ms_Genre" Relationship="MusicStoreModel.ms_Artist_Genre" FromRole="ms_Artist" ToRole="ms_Genre" />
+    <Property Name="IsFeatured" Type="Boolean" Nullable="false" />
   </EntityType>
   <EntityType Name="ms_Collection">
     <Key>
@@ -58,6 +60,8 @@
     <NavigationProperty Name="ms_Collection" Relationship="Self.ms_Song_Collection" FromRole="ms_Song" ToRole="ms_Collection" />
     <Property Name="Duration" Type="Double" />
     <NavigationProperty Name="ms_Genre" Relationship="MusicStoreModel.ms_Song_Genre" FromRole="ms_Song" ToRole="ms_Genre" />
+    <Property Name="IsFeatured" Type="Boolean" Nullable="false" />
+    <Property Name="Quality" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
   </EntityType>
   <EntityType Name="system_RouteData">
     <Key>
@@ -133,6 +137,7 @@
     <NavigationProperty Name="ms_Album" Relationship="MusicStoreModel.ms_Album_Genre" FromRole="ms_Genre" ToRole="ms_Album" />
     <NavigationProperty Name="ms_Artist" Relationship="MusicStoreModel.ms_Artist_Genre" FromRole="ms_Genre" ToRole="ms_Artist" />
     <NavigationProperty Name="ms_Song" Relationship="MusicStoreModel.ms_Song_Genre" FromRole="ms_Genre" ToRole="ms_Song" />
+    <Property Name="Thumbnail" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
   </EntityType>
   <Association Name="ms_Album_Genre">
     <End Type="MusicStoreModel.ms_Album" Role="ms_Album" Multiplicity="*" />

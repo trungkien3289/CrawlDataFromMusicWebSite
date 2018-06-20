@@ -16,6 +16,7 @@
           <Property Name="ReleaseDate" Type="datetime" />
           <Property Name="Status" Type="int" />
           <Property Name="Url" Type="nvarchar(max)" />
+          <Property Name="IsFeatured" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="ms_Album_Genre">
           <Key>
@@ -34,6 +35,7 @@
           <Property Name="Status" Type="int" />
           <Property Name="Url" Type="nvarchar(max)" />
           <Property Name="Thumbnail" Type="nvarchar(max)" />
+          <Property Name="IsFeatured" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="ms_Artist_Album">
           <Key>
@@ -71,6 +73,7 @@
           <Property Name="Description" Type="nvarchar(max)" />
           <Property Name="Status" Type="int" />
           <Property Name="Url" Type="nvarchar(max)" />
+          <Property Name="Thumbnail" Type="nvarchar(max)" />
         </EntityType>
         <EntityType Name="ms_Song">
           <Key>
@@ -86,6 +89,8 @@
           <Property Name="Status" Type="int" />
           <Property Name="Url" Type="nvarchar(max)" />
           <Property Name="Duration" Type="float" />
+          <Property Name="IsFeatured" Type="bit" Nullable="false" />
+          <Property Name="Quality" Type="float" />
         </EntityType>
         <EntityType Name="ms_Song_Album">
           <Key>
@@ -412,8 +417,9 @@
           <Property Name="Status" Type="Int32" />
           <Property Name="Url" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="ms_Artist" Relationship="Self.ms_Artist_Album" FromRole="ms_Album" ToRole="ms_Artist" />
-          <NavigationProperty Name="ms_Song" Relationship="Self.ms_Song_Album" FromRole="ms_Album" ToRole="ms_Song" />
           <NavigationProperty Name="ms_Genre" Relationship="MusicStoreModel.ms_Album_Genre" FromRole="ms_Album" ToRole="ms_Genre" />
+          <Property Name="IsFeatured" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="ms_Song" Relationship="MusicStoreModel.ms_Song_Album" FromRole="ms_Album" ToRole="ms_Song" />
         </EntityType>
         <EntityType Name="ms_Artist">
           <Key>
@@ -424,9 +430,10 @@
           <Property Name="Status" Type="Int32" />
           <Property Name="Url" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="ms_Album" Relationship="Self.ms_Artist_Album" FromRole="ms_Artist" ToRole="ms_Album" />
-          <NavigationProperty Name="ms_Song" Relationship="Self.ms_Song_Artist" FromRole="ms_Artist" ToRole="ms_Song" />
           <Property Name="Thumbnail" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="ms_Genre" Relationship="MusicStoreModel.ms_Artist_Genre" FromRole="ms_Artist" ToRole="ms_Genre" />
+          <Property Name="IsFeatured" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="ms_Song" Relationship="MusicStoreModel.ms_Song_Artist" FromRole="ms_Artist" ToRole="ms_Song" />
         </EntityType>
         <EntityType Name="ms_Collection">
           <Key>
@@ -438,26 +445,7 @@
           <Property Name="Thumbnail" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="Status" Type="Int32" />
           <Property Name="Url" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="ms_Song" Relationship="Self.ms_Song_Collection" FromRole="ms_Collection" ToRole="ms_Song" />
-        </EntityType>
-        <EntityType Name="ms_Song">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="AlbumId" Type="Int32" Nullable="false" />
-          <Property Name="Title" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="Thumbnail" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="MediaUrl" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="Lyrics" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="Status" Type="Int32" />
-          <Property Name="Url" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="ms_Album" Relationship="Self.ms_Song_Album" FromRole="ms_Song" ToRole="ms_Album" />
-          <NavigationProperty Name="ms_Artist" Relationship="Self.ms_Song_Artist" FromRole="ms_Song" ToRole="ms_Artist" />
-          <NavigationProperty Name="ms_Collection" Relationship="Self.ms_Song_Collection" FromRole="ms_Song" ToRole="ms_Collection" />
-          <Property Name="Duration" Type="Double" />
-          <NavigationProperty Name="ms_Genre" Relationship="MusicStoreModel.ms_Song_Genre" FromRole="ms_Song" ToRole="ms_Genre" />
+          <NavigationProperty Name="ms_Song" Relationship="MusicStoreModel.ms_Song_Collection" FromRole="ms_Collection" ToRole="ms_Song" />
         </EntityType>
         <EntityType Name="system_RouteData">
           <Key>
@@ -473,39 +461,14 @@
           <End Role="ms_Album" Type="Self.ms_Album" Multiplicity="*" />
           <End Role="ms_Artist" Type="Self.ms_Artist" Multiplicity="*" />
         </Association>
-        <Association Name="ms_Song_Album">
-          <End Role="ms_Album" Type="Self.ms_Album" Multiplicity="*" />
-          <End Role="ms_Song" Type="Self.ms_Song" Multiplicity="*" />
-        </Association>
-        <Association Name="ms_Song_Artist">
-          <End Role="ms_Artist" Type="Self.ms_Artist" Multiplicity="*" />
-          <End Role="ms_Song" Type="Self.ms_Song" Multiplicity="*" />
-        </Association>
-        <Association Name="ms_Song_Collection">
-          <End Role="ms_Collection" Type="Self.ms_Collection" Multiplicity="*" />
-          <End Role="ms_Song" Type="Self.ms_Song" Multiplicity="*" />
-        </Association>
         <EntityContainer Name="MusicStoreEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="ms_Album" EntityType="Self.ms_Album" />
           <EntitySet Name="ms_Artist" EntityType="Self.ms_Artist" />
           <EntitySet Name="ms_Collection" EntityType="Self.ms_Collection" />
-          <EntitySet Name="ms_Song" EntityType="Self.ms_Song" />
           <EntitySet Name="system_RouteData" EntityType="Self.system_RouteData" />
           <AssociationSet Name="ms_Artist_Album" Association="Self.ms_Artist_Album">
             <End Role="ms_Album" EntitySet="ms_Album" />
             <End Role="ms_Artist" EntitySet="ms_Artist" />
-          </AssociationSet>
-          <AssociationSet Name="ms_Song_Album" Association="Self.ms_Song_Album">
-            <End Role="ms_Album" EntitySet="ms_Album" />
-            <End Role="ms_Song" EntitySet="ms_Song" />
-          </AssociationSet>
-          <AssociationSet Name="ms_Song_Artist" Association="Self.ms_Song_Artist">
-            <End Role="ms_Artist" EntitySet="ms_Artist" />
-            <End Role="ms_Song" EntitySet="ms_Song" />
-          </AssociationSet>
-          <AssociationSet Name="ms_Song_Collection" Association="Self.ms_Song_Collection">
-            <End Role="ms_Collection" EntitySet="ms_Collection" />
-            <End Role="ms_Song" EntitySet="ms_Song" />
           </AssociationSet>
           <EntitySet Name="ms_Genre" EntityType="MusicStoreModel.ms_Genre" />
           <AssociationSet Name="ms_Album_Genre" Association="MusicStoreModel.ms_Album_Genre">
@@ -515,6 +478,19 @@
           <AssociationSet Name="ms_Artist_Genre" Association="MusicStoreModel.ms_Artist_Genre">
             <End Role="ms_Artist" EntitySet="ms_Artist" />
             <End Role="ms_Genre" EntitySet="ms_Genre" />
+          </AssociationSet>
+          <EntitySet Name="ms_Song" EntityType="MusicStoreModel.ms_Song" />
+          <AssociationSet Name="ms_Song_Album" Association="MusicStoreModel.ms_Song_Album">
+            <End Role="ms_Album" EntitySet="ms_Album" />
+            <End Role="ms_Song" EntitySet="ms_Song" />
+          </AssociationSet>
+          <AssociationSet Name="ms_Song_Artist" Association="MusicStoreModel.ms_Song_Artist">
+            <End Role="ms_Artist" EntitySet="ms_Artist" />
+            <End Role="ms_Song" EntitySet="ms_Song" />
+          </AssociationSet>
+          <AssociationSet Name="ms_Song_Collection" Association="MusicStoreModel.ms_Song_Collection">
+            <End Role="ms_Collection" EntitySet="ms_Collection" />
+            <End Role="ms_Song" EntitySet="ms_Song" />
           </AssociationSet>
           <AssociationSet Name="ms_Song_Genre" Association="MusicStoreModel.ms_Song_Genre">
             <End Role="ms_Genre" EntitySet="ms_Genre" />
@@ -532,6 +508,7 @@
           <Property Name="Url" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="ms_Album" Relationship="MusicStoreModel.ms_Album_Genre" FromRole="ms_Genre" ToRole="ms_Album" />
           <NavigationProperty Name="ms_Artist" Relationship="MusicStoreModel.ms_Artist_Genre" FromRole="ms_Genre" ToRole="ms_Artist" />
+          <Property Name="Thumbnail" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="ms_Song" Relationship="MusicStoreModel.ms_Song_Genre" FromRole="ms_Genre" ToRole="ms_Song" />
         </EntityType>
         <Association Name="ms_Album_Genre">
@@ -541,6 +518,39 @@
         <Association Name="ms_Artist_Genre">
           <End Type="MusicStoreModel.ms_Artist" Role="ms_Artist" Multiplicity="*" />
           <End Type="MusicStoreModel.ms_Genre" Role="ms_Genre" Multiplicity="*" />
+        </Association>
+        <EntityType Name="ms_Song">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="AlbumId" Type="Int32" Nullable="false" />
+          <Property Name="Title" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Thumbnail" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="MediaUrl" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Lyrics" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Status" Type="Int32" />
+          <Property Name="Url" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Duration" Type="Double" />
+          <Property Name="IsFeatured" Type="Boolean" Nullable="false" />
+          <Property Name="Quality" Type="Double" />
+          <NavigationProperty Name="ms_Album" Relationship="MusicStoreModel.ms_Song_Album" FromRole="ms_Song" ToRole="ms_Album" />
+          <NavigationProperty Name="ms_Artist" Relationship="MusicStoreModel.ms_Song_Artist" FromRole="ms_Song" ToRole="ms_Artist" />
+          <NavigationProperty Name="ms_Collection" Relationship="MusicStoreModel.ms_Song_Collection" FromRole="ms_Song" ToRole="ms_Collection" />
+          <NavigationProperty Name="ms_Genre" Relationship="MusicStoreModel.ms_Song_Genre" FromRole="ms_Song" ToRole="ms_Genre" />
+        </EntityType>
+        <Association Name="ms_Song_Album">
+          <End Type="MusicStoreModel.ms_Album" Role="ms_Album" Multiplicity="*" />
+          <End Type="MusicStoreModel.ms_Song" Role="ms_Song" Multiplicity="*" />
+        </Association>
+        <Association Name="ms_Song_Artist">
+          <End Type="MusicStoreModel.ms_Artist" Role="ms_Artist" Multiplicity="*" />
+          <End Type="MusicStoreModel.ms_Song" Role="ms_Song" Multiplicity="*" />
+        </Association>
+        <Association Name="ms_Song_Collection">
+          <End Type="MusicStoreModel.ms_Collection" Role="ms_Collection" Multiplicity="*" />
+          <End Type="MusicStoreModel.ms_Song" Role="ms_Song" Multiplicity="*" />
         </Association>
         <Association Name="ms_Song_Genre">
           <End Type="MusicStoreModel.ms_Genre" Role="ms_Genre" Multiplicity="*" />
@@ -555,6 +565,7 @@
           <EntitySetMapping Name="ms_Album">
             <EntityTypeMapping TypeName="MusicStoreModel.ms_Album">
               <MappingFragment StoreEntitySet="ms_Album">
+                <ScalarProperty Name="IsFeatured" ColumnName="IsFeatured" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Title" ColumnName="Title" />
                 <ScalarProperty Name="Description" ColumnName="Description" />
@@ -568,6 +579,7 @@
           <EntitySetMapping Name="ms_Artist">
             <EntityTypeMapping TypeName="MusicStoreModel.ms_Artist">
               <MappingFragment StoreEntitySet="ms_Artist">
+                <ScalarProperty Name="IsFeatured" ColumnName="IsFeatured" />
                 <ScalarProperty Name="Thumbnail" ColumnName="Thumbnail" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
@@ -583,22 +595,6 @@
                 <ScalarProperty Name="Title" ColumnName="Title" />
                 <ScalarProperty Name="Description" ColumnName="Description" />
                 <ScalarProperty Name="Thumbnail" ColumnName="Thumbnail" />
-                <ScalarProperty Name="Status" ColumnName="Status" />
-                <ScalarProperty Name="Url" ColumnName="Url" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="ms_Song">
-            <EntityTypeMapping TypeName="MusicStoreModel.ms_Song">
-              <MappingFragment StoreEntitySet="ms_Song">
-                <ScalarProperty Name="Duration" ColumnName="Duration" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="AlbumId" ColumnName="AlbumId" />
-                <ScalarProperty Name="Title" ColumnName="Title" />
-                <ScalarProperty Name="Description" ColumnName="Description" />
-                <ScalarProperty Name="Thumbnail" ColumnName="Thumbnail" />
-                <ScalarProperty Name="MediaUrl" ColumnName="MediaUrl" />
-                <ScalarProperty Name="Lyrics" ColumnName="Lyrics" />
                 <ScalarProperty Name="Status" ColumnName="Status" />
                 <ScalarProperty Name="Url" ColumnName="Url" />
               </MappingFragment>
@@ -623,33 +619,10 @@
               <ScalarProperty Name="Id" ColumnName="ArtistId" />
             </EndProperty>
           </AssociationSetMapping>
-          <AssociationSetMapping Name="ms_Song_Album" TypeName="MusicStoreModel.ms_Song_Album" StoreEntitySet="ms_Song_Album">
-            <EndProperty Name="ms_Album">
-              <ScalarProperty Name="Id" ColumnName="AlbumId" />
-            </EndProperty>
-            <EndProperty Name="ms_Song">
-              <ScalarProperty Name="Id" ColumnName="SongId" />
-            </EndProperty>
-          </AssociationSetMapping>
-          <AssociationSetMapping Name="ms_Song_Artist" TypeName="MusicStoreModel.ms_Song_Artist" StoreEntitySet="ms_Song_Artist">
-            <EndProperty Name="ms_Artist">
-              <ScalarProperty Name="Id" ColumnName="ArtistId" />
-            </EndProperty>
-            <EndProperty Name="ms_Song">
-              <ScalarProperty Name="Id" ColumnName="SongId" />
-            </EndProperty>
-          </AssociationSetMapping>
-          <AssociationSetMapping Name="ms_Song_Collection" TypeName="MusicStoreModel.ms_Song_Collection" StoreEntitySet="ms_Song_Collection">
-            <EndProperty Name="ms_Collection">
-              <ScalarProperty Name="Id" ColumnName="CollectionId" />
-            </EndProperty>
-            <EndProperty Name="ms_Song">
-              <ScalarProperty Name="Id" ColumnName="SongId" />
-            </EndProperty>
-          </AssociationSetMapping>
           <EntitySetMapping Name="ms_Genre">
             <EntityTypeMapping TypeName="MusicStoreModel.ms_Genre">
               <MappingFragment StoreEntitySet="ms_Genre">
+                <ScalarProperty Name="Thumbnail" ColumnName="Thumbnail" />
                 <ScalarProperty Name="Url" ColumnName="Url" />
                 <ScalarProperty Name="Status" ColumnName="Status" />
                 <ScalarProperty Name="Description" ColumnName="Description" />
@@ -672,6 +645,48 @@
             </EndProperty>
             <EndProperty Name="ms_Artist">
               <ScalarProperty Name="Id" ColumnName="ArtistId" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <EntitySetMapping Name="ms_Song">
+            <EntityTypeMapping TypeName="MusicStoreModel.ms_Song">
+              <MappingFragment StoreEntitySet="ms_Song">
+                <ScalarProperty Name="Quality" ColumnName="Quality" />
+                <ScalarProperty Name="IsFeatured" ColumnName="IsFeatured" />
+                <ScalarProperty Name="Duration" ColumnName="Duration" />
+                <ScalarProperty Name="Url" ColumnName="Url" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="Lyrics" ColumnName="Lyrics" />
+                <ScalarProperty Name="MediaUrl" ColumnName="MediaUrl" />
+                <ScalarProperty Name="Thumbnail" ColumnName="Thumbnail" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="AlbumId" ColumnName="AlbumId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="ms_Song_Album" TypeName="MusicStoreModel.ms_Song_Album" StoreEntitySet="ms_Song_Album">
+            <EndProperty Name="ms_Song">
+              <ScalarProperty Name="Id" ColumnName="SongId" />
+            </EndProperty>
+            <EndProperty Name="ms_Album">
+              <ScalarProperty Name="Id" ColumnName="AlbumId" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="ms_Song_Artist" TypeName="MusicStoreModel.ms_Song_Artist" StoreEntitySet="ms_Song_Artist">
+            <EndProperty Name="ms_Song">
+              <ScalarProperty Name="Id" ColumnName="SongId" />
+            </EndProperty>
+            <EndProperty Name="ms_Artist">
+              <ScalarProperty Name="Id" ColumnName="ArtistId" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="ms_Song_Collection" TypeName="MusicStoreModel.ms_Song_Collection" StoreEntitySet="ms_Song_Collection">
+            <EndProperty Name="ms_Song">
+              <ScalarProperty Name="Id" ColumnName="SongId" />
+            </EndProperty>
+            <EndProperty Name="ms_Collection">
+              <ScalarProperty Name="Id" ColumnName="CollectionId" />
             </EndProperty>
           </AssociationSetMapping>
           <AssociationSetMapping Name="ms_Song_Genre" TypeName="MusicStoreModel.ms_Song_Genre" StoreEntitySet="ms_Song_Genre">

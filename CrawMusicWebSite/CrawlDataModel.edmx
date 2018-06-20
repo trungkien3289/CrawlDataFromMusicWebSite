@@ -42,6 +42,16 @@
           <Property Name="Thumbnail" Type="nvarchar" MaxLength="300" />
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
         </EntityType>
+        <EntityType Name="Collection">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Title" Type="nvarchar(max)" />
+          <Property Name="Description" Type="nvarchar(max)" />
+          <Property Name="Thumbnail" Type="nvarchar(max)" />
+          <Property Name="Url" Type="nvarchar(max)" />
+        </EntityType>
         <EntityType Name="Genre">
           <Key>
             <PropertyRef Name="Id" />
@@ -60,6 +70,14 @@
           </Key>
           <Property Name="AlbumId" Type="int" Nullable="false" />
           <Property Name="SongId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="map_collection_song">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="CollectionId" Type="int" Nullable="false" />
+          <Property Name="songId" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
         </EntityType>
         <EntityType Name="map_genre_artist">
           <Key>
@@ -124,6 +142,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_map_collection_song_Collection">
+          <End Role="Collection" Type="Self.Collection" Multiplicity="1" />
+          <End Role="map_collection_song" Type="Self.map_collection_song" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Collection">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="map_collection_song">
+              <PropertyRef Name="CollectionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_map_genre_artist_Artist">
           <End Role="Artist" Type="Self.Artist" Multiplicity="1" />
           <End Role="map_genre_artist" Type="Self.map_genre_artist" Multiplicity="*" />
@@ -152,8 +182,10 @@
           <EntitySet Name="Album" EntityType="Self.Album" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Album_Data" EntityType="Self.Album_Data" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Artist" EntityType="Self.Artist" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Collection" EntityType="Self.Collection" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Genre" EntityType="Self.Genre" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="map_album_song" EntityType="Self.map_album_song" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="map_collection_song" EntityType="Self.map_collection_song" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="map_genre_artist" EntityType="Self.map_genre_artist" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Song" EntityType="Self.Song" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_Album_Artist" Association="Self.FK_Album_Artist">
@@ -167,6 +199,10 @@
           <AssociationSet Name="FK_map_album_song_Song" Association="Self.FK_map_album_song_Song">
             <End Role="Song" EntitySet="Song" />
             <End Role="map_album_song" EntitySet="map_album_song" />
+          </AssociationSet>
+          <AssociationSet Name="FK_map_collection_song_Collection" Association="Self.FK_map_collection_song_Collection">
+            <End Role="Collection" EntitySet="Collection" />
+            <End Role="map_collection_song" EntitySet="map_collection_song" />
           </AssociationSet>
           <AssociationSet Name="FK_map_genre_artist_Artist" Association="Self.FK_map_genre_artist_Artist">
             <End Role="Artist" EntitySet="Artist" />
@@ -198,6 +234,12 @@
           <AssociationSet Name="map_genre_artist" Association="CrawlDatabaseModel.map_genre_artist">
             <End Role="Artist" EntitySet="Artists" />
             <End Role="Genre" EntitySet="Genres" />
+          </AssociationSet>
+          <EntitySet Name="Collections" EntityType="CrawlDatabaseModel.Collection" />
+          <EntitySet Name="map_collection_song" EntityType="CrawlDatabaseModel.map_collection_song" />
+          <AssociationSet Name="FK_map_collection_song_Collection" Association="CrawlDatabaseModel.FK_map_collection_song_Collection">
+            <End Role="Collection" EntitySet="Collections" />
+            <End Role="map_collection_song" EntitySet="map_collection_song" />
           </AssociationSet>
         </EntityContainer>
         <EntityType Name="Album">
@@ -293,6 +335,38 @@
           <End Type="CrawlDatabaseModel.Artist" Role="Artist" Multiplicity="*" />
           <End Type="CrawlDatabaseModel.Genre" Role="Genre" Multiplicity="*" />
         </Association>
+        <EntityType Name="Collection">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Title" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Thumbnail" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Url" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="map_collection_song" Relationship="CrawlDatabaseModel.FK_map_collection_song_Collection" FromRole="Collection" ToRole="map_collection_song" />
+        </EntityType>
+        <EntityType Name="map_collection_song">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="CollectionId" Type="Int32" Nullable="false" />
+          <Property Name="songId" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="Collection" Relationship="CrawlDatabaseModel.FK_map_collection_song_Collection" FromRole="map_collection_song" ToRole="Collection" />
+        </EntityType>
+        <Association Name="FK_map_collection_song_Collection">
+          <End Type="CrawlDatabaseModel.Collection" Role="Collection" Multiplicity="1" />
+          <End Type="CrawlDatabaseModel.map_collection_song" Role="map_collection_song" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Collection">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="map_collection_song">
+              <PropertyRef Name="CollectionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -387,6 +461,26 @@
               <ScalarProperty Name="Id" ColumnName="ArtistId" />
             </EndProperty>
           </AssociationSetMapping>
+          <EntitySetMapping Name="Collections">
+            <EntityTypeMapping TypeName="CrawlDatabaseModel.Collection">
+              <MappingFragment StoreEntitySet="Collection">
+                <ScalarProperty Name="Url" ColumnName="Url" />
+                <ScalarProperty Name="Thumbnail" ColumnName="Thumbnail" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="map_collection_song">
+            <EntityTypeMapping TypeName="CrawlDatabaseModel.map_collection_song">
+              <MappingFragment StoreEntitySet="map_collection_song">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="songId" ColumnName="songId" />
+                <ScalarProperty Name="CollectionId" ColumnName="CollectionId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
